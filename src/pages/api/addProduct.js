@@ -1,32 +1,51 @@
-import connectToDatabase from "@/lib/mongodb";
-import Product from "@/models/Product";
+import connectToDatabase from '../../lib/mongodb';
+import Product from '../../models/Product';
+import multer from 'multer';
+import nextConnect from 'next-connect';
 
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({message : "Method not allowed"})
-    }
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 
-    const {name,  images, category, price, description, quantity} = req.body;
+const apiRoute = nextConnect({
+  onError(error, req, res) {
+    res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
+  },
+  onNoMatch(req, res) {
+    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  },
+});
 
-    if (!name || !images || !category || !price || !description || !quantity   == null ) {
-        return res.status(400).json({message : "All fields are required"})
-    }
+apiRoute.use(upload.array('images'));
 
-    try {
-        await connectToDatabase();
+apiRoute.post(async (req, res) => {
+  try {
+    await connectToDatabase();
 
-        const newProduct = new Product({
-            name,
-            images,
-            category,
-            price,
-            description,
-            quantity,
-        });
-        await newProduct.save();
+    const { name, category, price, description, quantity } = req.body;
+    const images = req.files.map(file => file.buffer.toString('base64'));
 
-        return res.status(201).json({message: "Product added successfully", product: newProduct})
-    } catch (error) {
-        return res.status(500).json({message: "Server error", error:error.message})
-    }
-}
+    const newProduct = new Product({
+      name,
+      images,
+      category,
+      price,
+      description,
+      quantity,
+    });
+
+    await newProduct.save();
+
+    return res.status(201).json({ message: 'Product added successfully', product: newProduct });
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+export default apiRoute;
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
