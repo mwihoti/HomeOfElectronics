@@ -10,7 +10,7 @@ export default function Home() {
          
             <Image
               src="/logo.jpeg"
-              alt="Vercel Logo"
+              alt="shop Logo"
              
               width={50}
               height={54}
