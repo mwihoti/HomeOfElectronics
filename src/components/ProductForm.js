@@ -1,36 +1,67 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const ProductForm = () => {
+
+    const [formData, setFormData] = useState({
+        name: '',
+        image: '',
+        category: '',
+        price: '',
+        description: '',
+        quantity: 0,
+
+    }
+
+    )
   return (
-    <div>
+    <div className='text-center'>
         <h3>Welcome To add Product page </h3>
         <form>
+            <div>
             <label > Name:
-                <input type='text' name='name' required />
+                <input className='border p-1' value={formData.name} type='text' name='name' required />
             </label>
+            </div>
+          
             <br/>
+            <div>
             <label > Images:
-                <input type='text' name='images' required multiple/>
+                <input className='border' value={formData.image} type='text' name='images' required multiple/>
             </label>
+            </div>
+           
             <br/>
+            <div>
             <label > Category:
-                <input type='text' name='category' required />
+                <input className='border' value={formData.category} type='text' name='category' required />
             </label>
+            </div>
+           
             <br/>
+            <div>
             <label > Price:
-                <input type='text' name='price' required />
+                <input className='border' value={formData.price} type='text' name='price' required />
             </label>
+
+            </div>
+            
             <br/>
+            <div>
             <label > Description:
-                <input type='text' name='description' required />
+                <input className='border' value={formData.description} type='text' name='description' required />
             </label>
+            </div>
+            
             <br/>
+            <div>
             <label >Quantity:
-                <input type='text' name='quantity' required />
+                <input className='border' type='text' value={formData.quantity} name='quantity' required />
             </label>
+            </div>
+            
             <br/>
 
-            <button type="submit">Add Product</button>
+            <button className='border' type="submit">Add Product</button>
         </form>
     </div>
   )
