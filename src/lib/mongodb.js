@@ -1,36 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const connectToDatabase = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    return;
+  }
 
-if (!MONGODB_URI) {
-    throw new Error(
-        'Please define the mongdb_uri variable in your env file'
-    );
-}
+  return mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+};
 
-let cached = global.mongoose;
-if (!cached) {
-    cached = global.mongoose = {
-        conn: null, promise:null
-    }
-}
-async function connectToDatabase (){
-    if(cached.conn) {
-    return cached.conn
-    }
-
-    if (!cached.promise) {
-        const opts = {
-            bufferCommands = false,
-        }
-
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => 
-            {
-                return mongoose;
-            });
-    }
-    cached.conn = await cached.promise
-    return cached.conn
-
-}
 export default connectToDatabase;

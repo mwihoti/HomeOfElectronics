@@ -29,9 +29,7 @@ const ProductForm = () => {
         try {
             const response = await fetch('api/addProduct', {
                 method: 'POST',
-                headers: {
-                    'content-type': 'application/json',
-                },
+
                 body: data,
 
             });
@@ -48,7 +46,7 @@ const ProductForm = () => {
                 setImages([])
             }
             else {
-                alert (`Failed to add Product : ${data.message}`)
+                alert (`Failed to add Product : ${ result ? result.message : 'Unknown error'}`)
             }
 
         }
@@ -70,7 +68,7 @@ const ProductForm = () => {
     return (
         <div className='text-center'>
             <h3>Welcome To add Product page </h3>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label > Name:
                         <input className='border p-1' value={formData.name} type='text' name='name' onChange={handleChange} required />
