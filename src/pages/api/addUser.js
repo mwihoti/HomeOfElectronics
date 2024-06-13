@@ -1,7 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import connectToDatabase from '../../lib/mongodb';
-import Product from '../../models/Product';
+import Users from '../../models/Users';
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -21,32 +21,19 @@ apiRoute.use(upload.array('images', 10));
 apiRoute.post(async (req, res) => {
   await connectToDatabase();
 
-  const { name, category, price, description, quantity } = req.body;
+  const { firstName, description, telNumber } = req.body;
   const images = req.files ? req.files.map((file) => file.buffer.toString('base64')) : [];
 
-  const newProduct = new Product({
-    name,
-    images,
-    category,
-    price,
+  const newUser = new Users({
+    firstName,
     description,
-    quantity,   
+    telNumber,
+    images,
   });
 
   try {
-    const savedProduct = await newProduct.save();
-    res.status(201).json(savedProduct);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-apiRoute.get(async (req, res) => {
-  const db = await connectToDatabase();
-
-  try {
-    const products = await Product.find({});
-    res.status(200).json({ database: db.name, products });
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

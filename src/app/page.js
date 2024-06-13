@@ -1,6 +1,8 @@
 import Image from "next/image";
 import ProductForm from "@/components/ProductForm";
 import ProductList from "@/components/ProductList";
+import UsersForm from "@/components/UsersForm";
+import UsersList from "@/components/UsersList";
 
 export default function Home() {
   return (
@@ -28,7 +30,12 @@ export default function Home() {
         <ProductList />
          
       </div>
-
+      <div>
+        <UsersForm />
+      </div>
+<div>
+<UsersList />
+</div>
    </main>
   );
 }
