@@ -3,6 +3,7 @@ import ProductList from "@/components/ProductList";
 import UsersForm from "@/components/UsersForm";
 import UsersList from "@/components/UsersList";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
       </div>
 <div>
 <UsersList />*/}
+<Footer />
 </div>
    </main>
   );
