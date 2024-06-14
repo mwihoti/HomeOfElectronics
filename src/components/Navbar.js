@@ -15,7 +15,7 @@ const Navbar = () => {
 
                     width={60}
                     height={50} />
-                <h2 className="text-xl">Home of elctronics</h2>
+                <h2 className="text-xl">HomeOfElctronics</h2>
                 <div className=' flex ml-20'>
                     <ul className='flex gap-10 '>
 
@@ -27,7 +27,7 @@ const Navbar = () => {
                             <Link href='/home'>Orders</Link>
                         </li>
                         <li>
-                            <Link href='/home'>Contact us</Link>
+                            <Link href='/home'>About us</Link>
                         </li>
                     </ul>
                 </div>
