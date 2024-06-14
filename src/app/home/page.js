@@ -1,8 +1,37 @@
+import Image from 'next/image'
 import React from 'react'
+import ProductList from '@/components/ProductList'
 
 const Home = () => {
+
   return (
-    <div>Home</div>
+    <div className='text-center text-white bg-[#2d3644]'>
+     <div>
+
+
+      <ul className='flex space-x-6 p-3'>
+        <h4 className=''> CheckOut our latest categories</h4>
+        <li >
+          <Image  src = '/tv.png' alt='tv' height={50} width={50} />
+          Tvs
+        </li>
+        <li>
+        <Image  src = '/speakers.png' alt='tv' height={50} width={50} />
+
+          Speakers
+        </li>
+        <li>
+        <Image  src = '/headphones.png' alt='tv' height={50} width={50} />
+
+          PersonalAudio
+        </li>
+
+      </ul>
+      </div>
+      <ProductList/>
+      
+      
+      </div>
   )
 }
 

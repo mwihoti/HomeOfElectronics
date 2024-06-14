@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Navbar = () => {
     return (
-        <div className='flex p-4 items-center justify-center border bg-black text-white' >
+        <div className='flex p-4 items-center justify-center  bg-[#2d3643] text-white' >
 
             <div className='flex items-center gap-5'>
                 <Image
