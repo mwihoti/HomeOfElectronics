@@ -4,13 +4,23 @@ import UsersForm from "@/components/UsersForm";
 import UsersList from "@/components/UsersList";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Home from "@/pages/home/Home";
 
-export default function Home() {
+
+export default function App() {
   return (
     <main className="" >
       <div className=" w-full">
   
-       <Navbar />
+      
+         
+         <Navbar />
+         
+         
+
+
+
+         <Footer />
          
          
            
@@ -29,7 +39,7 @@ export default function Home() {
       </div>
 <div>
 <UsersList />*/}
-<Footer />
+
 </div>
    </main>
   );
