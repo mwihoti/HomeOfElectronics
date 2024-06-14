@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
-import connectToDatabase from '../../lib/mongodb';
+import { connectToDatabase} from '../../lib/mongodb';    
 import Users from '../../models/Users';
 
 const upload = multer({

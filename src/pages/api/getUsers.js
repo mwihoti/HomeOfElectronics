@@ -1,7 +1,7 @@
 // pages/api/getUsers.js
 
 import nextConnect from 'next-connect';
-import connectToDatabase from '../../lib/mongodb';
+import { connectToDatabase } from '../../lib/mongodb';
 import Users from '../../models/Users';
 
 const apiRoute = nextConnect({

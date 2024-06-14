@@ -1,5 +1,5 @@
 import nextConnect from 'next-connect';
-import connectToDatabase from '../../lib/mongodb';
+import { connectToDatabase } from '../../lib/mongodb';
 import Product from '../../models/Product';
 
 const apiRoute = nextConnect({
