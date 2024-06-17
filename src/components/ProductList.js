@@ -36,28 +36,37 @@ const ProductList = () => {
 
   return (
     <div className="mx-auto p-4">
-      <h3 className=' mb-4 items-center'>Our collections</h3>
-      <div >
-        <div className='flex justify-center'>
+      <h3 className=' mb-4  items-center'>Our collections</h3>
+     
+        <div className='justify-center  m-3'>
 
        
-      <ul className='p-3 flex  gap-4'>
+      <ul className='p-3  text-black gap-8 grid grid-cols-4 divide-x'>
         {products.map((product) => (
-          <li key={product._id}>
-            <h4>{product.name}</h4>
-            <img src={`data:image/jpeg;base64,${product.images}`} alt={product.name} />
-            <p>Category: {product.category}</p>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
-            <p>Quantity: {product.quantity}</p>
-              <button className='p-2 border m-3 rounded bg-zinc-950'> Add </button>
+          <li key={product._id } className=" border">
+           
+            <img src={`data:image/jpeg;base64,${product.images[0] }`} height={100} width={500} alt={product.name} />
+            
+             <h4>Product name: {product.name}</h4>
+            { /*<p>Category: {product.category}</p>*/}
+            <div className="flex gap-10 justify-center m-2">
+            <p><strong>Price Ksh: </strong>{product.price}</p>
+            {/*<p>Description: {product.description}</p>*/}
+            <p> <strong>Quantity: </strong>{product.quantity}</p>
+            
+            </div >
+           
+            <div>
+
+            <button className='p-2 border m-3 rounded '> Add </button>
+            </div>
+             
           </li>
           
         ))}
        
       </ul> 
-        
-       </div>
+   
       
       </div>
      

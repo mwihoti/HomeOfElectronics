@@ -4,7 +4,7 @@ import UsersForm from "@/components/UsersForm";
 import UsersList from "@/components/UsersList";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Home from "@/pages/home/Home";
+import Home from "./home/page";
 
 
 export default function App() {
@@ -14,13 +14,14 @@ export default function App() {
   
       
          
-         <Navbar />
+        
          
+         <Home />
          
 
 
 
-         <Footer />
+         
          
          
            
