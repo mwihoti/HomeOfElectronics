@@ -1,10 +1,13 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,6 +34,41 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
+  const handleMouseEnetr = (productId) => {
+    const productIndex = products.findIndex((product) => product._id === productId);
+    let currentImageIndex = 0;
+
+    const intervalId = setInterval(() => {
+      currentImageIndex = (currentImageIndex + 1) % products[productIndex].images.length
+      setProducts((prevProducts) => {
+        const newProducts = [...prevProducts];
+        newProducts[productIndex].currentImage = newProducts[productIndex].images[currentImageIndex];
+        return newProducts
+      });
+    }, 500);
+
+    setProducts((prevProducts) => {
+      const newProducts = [...prevProducts];
+      newProducts[productIndex].intervalId = intervalId;
+      return newProducts;
+    });
+  };
+
+  const handleMouseLeave = (productId) => {
+    const productIndex = products.findIndex((product) => product._id === productId);
+    clearInterval(products[productIndex].intervalId);
+
+    setProducts((prevProducts) => {
+      const newProducts = [...prevProducts];
+      newProducts[productIndex].currentImage = newProducts[productIndex].images[0];
+      return newProducts;
+    });
+  }
+
+  const handleClick =  (productId) => {
+    router.push(`/product/${productId}`);
+  }
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -43,9 +81,13 @@ const ProductList = () => {
        
       <ul className='p-3 m-2 space-between  text-black gap-8 grid grid-cols-4 divide-x'>
         {products.map((product) => (
-          <li key={product._id } className="bg-gray-200  m-2">
+          <li key={product._id } className="bg-gray-200 border m-2"
+          onMouseEnter={() => handleMouseEnetr(product._id)}
+          onMouseLeave={() => handleMouseLeave(product._id)}
+          onClick={() => handleClick(product._id)}
+          >
             <div className='w-full'>
-            <img src={`data:image/jpeg;base64,${product.images[0] }`} className='object-fill object-center h-40 w-full'  alt={product.name} />
+            <img src={`data:image/jpeg;base64,${product.currentImage|| product.images[0] }`} className='object-fill object-center h-40 w-full'  alt={product.name} />
 
 
             </div>
