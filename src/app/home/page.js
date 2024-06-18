@@ -5,7 +5,7 @@ import ProductList from '@/components/ProductList'
 const Home = () => {
 
   return (
-    <div className='text-center text-white bg-[#2d3644]'>
+    <div className='text-center text-black bg-[#f5f7fa]'>
      <div>
 
 

@@ -35,17 +35,21 @@ const ProductList = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="mx-auto p-4">
+    <div className="mx-auto p-4 ">
       <h3 className=' mb-4  items-center'>Our collections</h3>
      
-        <div className='justify-center  m-3'>
+        <div className='justify-center  m-3 '>
 
        
-      <ul className='p-3  text-black gap-8 grid grid-cols-4 divide-x'>
+      <ul className='p-3 m-2 space-between  text-black gap-8 grid grid-cols-4 divide-x'>
         {products.map((product) => (
-          <li key={product._id } className=" border">
+          <li key={product._id } className="bg-gray-200  m-2">
+            <div className='w-full'>
+            <img src={`data:image/jpeg;base64,${product.images[0] }`} className='object-fill object-center h-40 w-full'  alt={product.name} />
+
+
+            </div>
            
-            <img src={`data:image/jpeg;base64,${product.images[0] }`} height={100} width={500} alt={product.name} />
             
              <h4>Product name: {product.name}</h4>
             { /*<p>Category: {product.category}</p>*/}
