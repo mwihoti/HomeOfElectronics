@@ -3,7 +3,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <div className=' items-center text-center p-4 justify-center gap-9  bg-zinc-800 flex text-white'>
+        <div className='bottom-0 inset-x-0 items-center text-center  p-4 justify-center gap-9 mt-auto bg-zinc-800 flex text-white'>
             <Image
                 src="/logo.jpeg"
                 alt="shop Logo"

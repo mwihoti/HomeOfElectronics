@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
+
 export const metadata = {
   title: "Homeofelectronics",
   description: "author mwihoti",
@@ -13,10 +14,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-      <Navbar />
+      
       </head>
       
-      <body >
+      <body className="min-h-screen" >
+      <Navbar />
       
         {children}
         <Footer />

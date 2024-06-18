@@ -1,5 +1,6 @@
 import React from 'react'
 import ProductForm from '@/components/ProductForm'
+import ProductDetail from '@/app/product/[ProductDetail]'
 
 const ProductPage = () => {
   return (
@@ -8,7 +9,8 @@ const ProductPage = () => {
             Add Products
         </h1>
 
-        <ProductForm/>
+      { /* <ProductForm/>*/}
+        <ProductDetail />
 
 
     </div>
