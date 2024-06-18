@@ -9,7 +9,7 @@ const apiRoute = nextConnect({
   }
 });
 
-apiRoute.route.get(async (req, res) => {
+apiRoute.get(async (req, res) => {
   await connectToDatabase();
 
   const {productId} = req.query;
@@ -17,7 +17,7 @@ apiRoute.route.get(async (req, res) => {
   try {
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({error: 'Prouct not found'});
+      return res.status(404).json({error: 'Product not found'});
 
     }
     res.status(200).json(product);
