@@ -87,7 +87,7 @@ const ProductList = () => {
           onClick={() => handleClick(product._id)}
           >
             <div className='w-full p-3'>
-            <img src={`data:image/jpeg;base64,${product.currentImage|| product.images[0] }`} loading='lazy' className='object-fill object-center h-40 w-full'  alt={product.name} />
+            <img src={`${product.currentImage|| product.images[0] }`} loading='lazy' className='object-fill object-center h-40 w-full'  alt={product.name} />
 
 
             </div>

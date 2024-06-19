@@ -2,6 +2,7 @@ import nextConnect from 'next-connect';
 import multer from 'multer';
 import { connectToDatabase, gfs } from '../../lib/mongodb';
 import Product from '../../models/Product';
+import cloudinary from '@/lib/cloudinary';
 
 
 // 
@@ -26,11 +27,26 @@ apiRoute.post(async (req, res) => {
   await connectToDatabase();
 
   const { name, category, price, description, quantity } = req.body;
-  const images = req.files ? req.files.map((file) => file.buffer.toString('base64')) : [];
+  const imageUrls = [];
+
+  if (req.files) {
+    for (const file of req.files) {
+      await new Promise ((resolve, reject) => {
+        cloudinary.uploader.upload_stream({ resource_type: 'image'}, (error, result) => {
+          if (error) {
+            console.error('cloudinary upload error', error);
+            return res.status(500).json({ error: 'Image uplaod failed'});
+          }
+          imageUrls.push(result.secure_url)
+          resolve();
+        }).end(file.buffer)
+      })
+    }
+  }
 
   const newProduct = new Product({
     name,
-    images,
+    images: imageUrls,
     category,
     price,
     description,
