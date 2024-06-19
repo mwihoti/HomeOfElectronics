@@ -5,22 +5,23 @@ import Image from "next/image";
 
 const Navbar = () => {
     return (
-        <div className='flex p-4   bg-[#2d3643] text-white' >
+        <div className='flex p-4 justify-between   bg-[#406ca9] text-white' >
 
-            <div className='flex  gap-5'>
-                <div>
-                <Image
-                    src="/logo.jpeg"
-                    alt="shop Logo"
-                    className=''
+            <div className='flex justify-center  space-x-28'>
+                <div className='flex gap-4 items-center'>
+                    <Image
+                        src="/logo.jpeg"
+                        alt="shop Logo"
+                        className=''
 
-                    width={60}
-                    height={50} />
-                <h2 className="text-xl ">HomeOfElctronics</h2>
+                        width={60}
+                        height={50} />
+                    <h2 className="text-2xl text-black font-bold ">HomeOfElctronics</h2>
 
                 </div>
-                
-                <div className=' flex ml-20 '>
+                </div>
+
+                <div className=' flex  '>
                     <ul className='flex gap-10 '>
 
 
@@ -38,6 +39,10 @@ const Navbar = () => {
 
 
 
+       
+            <div className='flex  gap-4'>
+                <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
+                <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='cart' width={30} height={30} />
             </div>
 
         </div>

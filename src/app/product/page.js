@@ -8,7 +8,7 @@ const ProductPage = () => {
             Add Products
         </h1>
 
-      { /* <ProductForm/>*/}
+      { <ProductForm/>}
       
 
 

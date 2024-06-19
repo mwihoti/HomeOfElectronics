@@ -69,9 +69,23 @@ const ProductList = () => {
     router.push(`/product/${productId}`);
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) {
+    return (
+      <div className="mx-auto p-4">
+        <h3 className="mb-4 items-center">Our collections</h3>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
+  if (error) {
+    return (
+      <div className="mx-auto p-4">
+        <h3 className="mb-4 items-center">Our collections</h3>
+        <p>Error: {error}</p>
+      </div>
+    );
+  }
   return (
     <div className="mx-auto p-4 ">
       <h3 className=' mb-4  items-center'>Our collections</h3>
@@ -87,7 +101,7 @@ const ProductList = () => {
           onClick={() => handleClick(product._id)}
           >
             <div className='w-full p-3'>
-            <img src={`${product.currentImage|| product.images[0] }`} loading='lazy' className='object-fill object-center h-40 w-full'  alt={product.name} />
+            <img src={`data:image/jpeg;base64,${product.currentImage|| product.images[0] }`} loading='lazy' className='object-fill object-center h-40 w-full'  alt={product.name} />
 
 
             </div>

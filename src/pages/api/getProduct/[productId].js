@@ -4,7 +4,7 @@ import Product from "@/models/Product";
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
-    res.statusCode(501).json({ error: `Sorry something happened! ${error.message}`});
+    res.status(501).json({ error: `Sorry something happened! ${error.message}`});
 
   }
 });

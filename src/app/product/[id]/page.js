@@ -1,6 +1,7 @@
 'use client';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 const ProductDetail = () => {
   const params = useParams();
@@ -47,9 +48,16 @@ const ProductDetail = () => {
           <p className="text-lg"><strong>Price Ksh:</strong> {product.price}</p>
           <p className="text-lg"><strong>Quantity:</strong> {product.quantity}</p>
          
-          <div className='flex m-2 p-1'>
-            Number of items: 
-            <h3 className='m-2'>+</h3> [] <h3 className='m-2'>-</h3>
+          <div className=' m-2 items-center p-1'>
+            Select of items: 
+          <div className='flex'>
+            <Image src="/subtract.png" alt="minus" className='border m-2' width={20} height={20} onClick={() => setNumItems(numItems - 1)} />
+            <p className="m-2">{numItems}</p>
+
+            <Image src="/add.png" alt="addition" width={20} height={20} className='border m-2' onClick={() => setNumItems(numItems + 1)} />
+
+
+          </div>
           </div>
           <div className='flex gap-4'>
           <button className="mt-4 px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-lg">Add to Cart</button>
