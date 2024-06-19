@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -65,7 +66,7 @@ const ProductList = () => {
     });
   }
 
-  const handleClick =  (productId) => {
+  const handleClick = (productId) => {
     router.push(`/product/${productId}`);
   }
 
@@ -89,12 +90,12 @@ const ProductList = () => {
   return (
     <div className="mx-auto p-4 ">
       <h3 className=' mb-4  items-center'>Our collections</h3>
-     
-        <div className='justify-center  m-3 '>
 
-       
-      <ul className='p-3 m-2 space-between  text-black gap-8 grid grid-cols-4 divide-x'>
-        {products.map((product) => (
+      <div className='justify-center  m-3 '>
+
+
+        <ul className='p-3 m-2 space-between  text-black gap-8 grid grid-cols-4 divide-x'>
+          {products.map((product) => (
           <li key={product._id } className="bg-gray-200 border m-2"
           onMouseEnter={() => handleMouseEnetr(product._id)}
           onMouseLeave={() => handleMouseLeave(product._id)}
@@ -115,21 +116,23 @@ const ProductList = () => {
             <p> <strong>Quantity: </strong>{product.quantity}</p>
             
             </div >
+            
            
-            <div>
+            <div className='flex'>
 
-            <button className='p-2 border m-3 rounded '> Add </button>
+            <button className='p-2 border ml-20 border-gray-500 m-2 rounded '>Add to<br/> <Image className='rounded object-fill' src='/wishlist.png' alt='cart' width={40} height={30} /> </button>
             </div>
              
           </li>
           
         ))}
-       
-      </ul> 
-   
-      
+
+      </ul>
       </div>
-     
+
+
+
+
     </div>
   );
 };

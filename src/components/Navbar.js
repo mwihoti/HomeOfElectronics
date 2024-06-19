@@ -41,8 +41,21 @@ const Navbar = () => {
 
        
             <div className='flex  gap-4'>
+                <h4> 
                 <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
-                <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='cart' width={30} height={30} />
+                Cart
+
+                </h4>
+                <h4>
+                <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='cart' width={40} height={30} />
+                User
+                </h4>
+                <h4>
+                <Image className='rounded object-fill' src='/wishlist.png' alt='cart' width={40} height={30} value='Wishlist' />
+                
+                wishlist
+                </h4>
+                             
             </div>
 
         </div>
