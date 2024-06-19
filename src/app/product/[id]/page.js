@@ -2,6 +2,7 @@
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const ProductDetail = () => {
   const params = useParams();
@@ -39,16 +40,32 @@ const ProductDetail = () => {
   if (!product) return <p>No product found</p>;
 
   return (
-    <div className="container mx-auto">
-      <h2 className="text-center my-4">Product selected</h2>
-      <div className="flex items-start space-x-6">
-        <img className="w-1/2 h-auto object-cover rounded-lg" src={`data:image/jpeg;base64,${product.images[0]}`} alt={product.name} />
-        <div className="w-1/2 m-4">
+    <div className=" container mx-auto ">
+      <h2 className=" my-4 text-center">Product selected</h2> 
+      <div className='grid grid-cols-2 space-x-6'>
+
+      <div className="flex flex-col items-start space-y-4">
+          <img className="w-full h-auto object-cover rounded-lg" src={`data:image/jpeg;base64,${product.images[0]}`} alt={product.name} />
+          <div className="flex space-x-4">
+            {product.images.slice(1).map((image, index) => (
+              <img key={index} className="w-1/5 h-auto object-cover rounded-lg" src={`data:image/jpeg;base64,${image}`} alt={`${product.name}-${index}`} />
+            ))}
+          </div>
+          <p className="text-lg"><strong>Description:</strong> {product.description}</p>
+        </div>
+        
+      
+
+       
+  
+        <div className="flex flex-col space-y-4">
           <h1 className="text-2xl font-bold">{product.name}</h1>
           <p className="text-lg"><strong>Price Ksh:</strong> {product.price}</p>
           <p className="text-lg"><strong>Quantity:</strong> {product.quantity}</p>
+
+
          
-          <div className=' m-2 items-center p-1'>
+          <div className=' items-center p-1'>
             Select of items: 
           <div className='flex'>
             <Image src="/subtract.png" alt="minus" className='border m-2' width={20} height={20} onClick={() => setNumItems(numItems - 1)} />
@@ -64,15 +81,20 @@ const ProductDetail = () => {
           <button className="mt-4 px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-lg">Continue shopping</button>
 
           </div>
+          <div className='gap-8'>
+          <button className="mt-4 px-4 py-2  border border-gray-4 bg-yellow-400 hover:bg-yellow-800 rounded-lg">Buy Now</button>
+          <button className="mt-4 px-4 py-2  border border-gray-4 bg-gray-400 rounded-lg"><Link href='/'>Home</Link></button>
+
+          </div>
+
+          
          
         </div>
-      </div>
-      <div className="flex mt-6 space-x-4">
-        {product.images.slice(1).map((image, index) => (
-          <img key={index} className="w-1/5 h-auto object-cover rounded-lg" src={`data:image/jpeg;base64,${image}`} alt={`${product.name}-${index}`} />
-        ))}
-         <p className="text-lg"><strong>Description:</strong> {product.description}</p>
-      </div>
+
+    
+      
+     
+    </div>
     </div>
   );
 };
