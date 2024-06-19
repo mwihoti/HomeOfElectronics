@@ -21,8 +21,9 @@ export default function RootLayout({ children }) {
       <Navbar />
       
         {children}
-        <Footer />
+        <Footer className="absolute bottom-0 m-3" />
         </body>
+       
         
     </html>
   );
