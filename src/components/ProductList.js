@@ -75,7 +75,10 @@ const ProductList = ({ wishlist, setWishlist }) => {
       return;
     }
     if (!wishlist.some((item) => item._id === productId)) {
-      setWishlist([...wishlist, productToAdd]);
+      const newWishlist = [...wishlist, productToAdd];
+      setWishlist(newWishlist);
+      localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+     
     }
   };
 
@@ -106,11 +109,14 @@ const ProductList = ({ wishlist, setWishlist }) => {
             <li
               key={product._id}
               className="bg-gray-200 border m-2"
-              onMouseEnter={() => handleMouseEnter(product._id)}
-              onMouseLeave={() => handleMouseLeave(product._id)}
-              onClick={() => handleClick(product._id)}
+             
             >
-              <div className="w-full p-3">
+              <div
+                 onMouseEnter={() => handleMouseEnter(product._id)}
+                 onMouseLeave={() => handleMouseLeave(product._id)}
+                 onClick={() => handleClick(product._id)}
+              >
+                  <div className="w-full p-3">
                 <img
                   src={`data:image/jpeg;base64,${product.currentImage || product.images[0]}`}
                   loading="lazy"
@@ -129,6 +135,9 @@ const ProductList = ({ wishlist, setWishlist }) => {
                   {product.quantity}
                 </p>
               </div>
+
+              </div>
+            
               <div className="flex">
                 <button
                   className="p-2 border inset-1 ml-20 m-2 rounded"
