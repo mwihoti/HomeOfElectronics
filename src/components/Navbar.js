@@ -1,21 +1,50 @@
 'use client'
 import Link from 'next/link'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Image from "next/image";
 import { useRouter} from 'next/navigation'
 
 
 
-const Navbar = (wishlist) => {
+const Navbar = () => {
     const router = useRouter();
-    const [wishlistCount, setWishlistCount] = useState(0);
+    const [wishlist, setWishlist] = useState(0);
 
-    const addToWishlist = () => {
-        setWishlistCount(wishlistCount + 1);
-    }
+    
     const handleWishlistClick = () => {
         router.push('/wishlist')
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            setWishlist(savedWishlist);
+
+        }
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('wishlist', JSON.stringify('wishlist'));
+        }
+    }, [wishlist]);
+
+    const addToWishlist = (product) => {
+        setWishlist((prevWishlist) =>  {
+            const isalreadyInWishlist = prevWishlist.some((item) => item._id === product._id);
+            if (!isalreadyInWishlist) {
+                const newWishlist = [...prevWishlist, product];
+                localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+                return newWishlist
+
+            }
+
+            return prevWishlist;
+        })
+        
+    }
+
+
 
     return (
         <div className='flex p-4 justify-between   bg-[#406ca9] text-white' >
@@ -64,9 +93,11 @@ const Navbar = (wishlist) => {
                 User
                 </h4>
                 <h4>
-                <Image className='rounded object-fill' src='/wishlist.png' alt='cart' width={40} height={30}onClick={handleWishlistClick} />
-                Wishlist [{wishlistCount}]
-                </h4>
+                <button className='flex items-center gap-1' onClick={handleWishlistClick}>
+            <Image className='rounded object-fill' src='/wishlist.png' alt='wishlist' width={40} height={30} />
+            Wishlist ({wishlist.length})
+          </button>
+          </h4>
                              
             </div>
 
