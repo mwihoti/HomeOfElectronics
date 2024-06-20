@@ -55,10 +55,10 @@ const Navbar = ({ wishlist }) => {
           </button>
         </h4>
       </div>
-      <div>
+      <div className='gap-3 flex'>
         
-        <button > <Link href='/sign/signIn'>SignIn</Link></button>
-        <button > <Link href='/sign/signUp'> Login</Link></button>
+        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signIn'>SignIn</Link></button>
+        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signUp'> Login</Link></button>
       </div>
     </div>
   );
