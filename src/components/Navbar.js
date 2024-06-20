@@ -2,17 +2,19 @@
 import Link from 'next/link'
 import React, {useState} from 'react'
 import Image from "next/image";
+import { useRouter} from 'next/navigation'
 
 
 
-const Navbar = () => {
+const Navbar = (wishlist) => {
+    const router = useRouter();
     const [wishlistCount, setWishlistCount] = useState(0);
 
     const addToWishlist = () => {
         setWishlistCount(wishlistCount + 1);
     }
     const handleWishlistClick = () => {
-        alert ('Wishlist Clicked')
+        router.push('/wishlist')
     }
 
     return (
