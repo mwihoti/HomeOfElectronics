@@ -1,9 +1,20 @@
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, {useState} from 'react'
 import Image from "next/image";
 
 
+
 const Navbar = () => {
+    const [wishlistCount, setWishlistCount] = useState(0);
+
+    const addToWishlist = () => {
+        setWishlistCount(wishlistCount + 1);
+    }
+    const handleWishlistClick = () => {
+        alert ('Wishlist Clicked')
+    }
+
     return (
         <div className='flex p-4 justify-between   bg-[#406ca9] text-white' >
 
@@ -51,9 +62,8 @@ const Navbar = () => {
                 User
                 </h4>
                 <h4>
-                <Image className='rounded object-fill' src='/wishlist.png' alt='cart' width={40} height={30} value='Wishlist' />
-                
-                wishlist
+                <Image className='rounded object-fill' src='/wishlist.png' alt='cart' width={40} height={30}onClick={handleWishlistClick} />
+                Wishlist [{wishlistCount}]
                 </h4>
                              
             </div>

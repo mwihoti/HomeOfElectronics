@@ -1,8 +1,10 @@
+'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import ProductList from '@/components/ProductList'
 
 const Home = () => {
+  const [wishlist, setWishlist] = useState([])
 
   return (
     <div className='text-center text-black bg-[#f5f7fa]'>
@@ -28,7 +30,7 @@ const Home = () => {
 
       </ul>
       </div>
-      <ProductList/>
+      <ProductList wishlist={wishlist} setWishlist={setWishlist}/>
       
       
       </div>

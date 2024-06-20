@@ -3,11 +3,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-const ProductList = () => {
+const ProductList = ({ wishlist, setWishlist }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [wishlist, setWishlist] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -71,14 +70,13 @@ const ProductList = () => {
 
   const addToWishlist = (productId) => {
     const productToAdd = products.find((product) => product._id === productId);
+    if (!productToAdd) {
+      console.error(`Product with id ${productId} not found`);
+      return;
+    }
     if (!wishlist.some((item) => item._id === productId)) {
       setWishlist([...wishlist, productToAdd]);
     }
-  };
-
-  const handleWishlistClick = () => {
-    console.log('Wishlist clicked', wishlist);
-    // Implement logic to show wishlist items or navigate to wishlist page
   };
 
   if (loading) {
@@ -133,15 +131,14 @@ const ProductList = () => {
               </div>
               <div className="flex">
                 <button
-                  className="p-2 border ml-20 border-gray-500 m-2 rounded"
+                  className="p-2 border inset-1 ml-20 m-2 rounded"
                   onClick={(e) => {
                     e.stopPropagation();
                     addToWishlist(product._id);
                   }}
                 >
-                  Add to
-                  <br />
-                  <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={40} height={30} />
+                  <h3 className="text-center">Add to</h3>
+                  <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={20} height={20} />
                 </button>
               </div>
             </li>
