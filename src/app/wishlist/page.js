@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Wishlist from '@/components/Wishlist'
 
 const WishlistPage = () => {
