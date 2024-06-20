@@ -14,7 +14,7 @@ const WishlistPage = () => {
     }, [])
   return (
     <div>
-        <h1> Wishlist page</h1>
+        
         <Wishlist wishlist={wishlist} />       
     </div>
   )

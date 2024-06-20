@@ -74,13 +74,20 @@ const ProductList = ({ wishlist, setWishlist }) => {
       console.error(`Product with id ${productId} not found`);
       return;
     }
+    
+    if (!wishlist) {
+      setWishlist([productToAdd]);
+      localStorage.setItem('wishlist', JSON.stringify([productToAdd]));
+      return;
+    }
+    
     if (!wishlist.some((item) => item._id === productId)) {
       const newWishlist = [...wishlist, productToAdd];
       setWishlist(newWishlist);
       localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-     
     }
   };
+  
 
   if (loading) {
     return (

@@ -1,47 +1,28 @@
-import ProductForm from "@/components/ProductForm";
-import ProductList from "@/components/ProductList";
-import UsersForm from "@/components/UsersForm";
-import UsersList from "@/components/UsersList";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Home from "./home/page";
-
+'use client'
+import React, { useState, useEffect } from 'react';
+import Home from './home/page';
+import Navbar from '@/components/Navbar';
 
 export default function App() {
+  const [wishlist, setWishlist] = useState([]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      setWishlist(savedWishlist);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+
   return (
-    <main className="" >
-      <div className=" w-full">
-  
-      
-         
-        
-         
-         <Home />
-         
-
-
-
-         
-         
-         
-           
-            
-        
-       
-
-        {/*<br />
-        <ProductForm />
-
-        <ProductList />
-         
+    <main className="">
+      <div className="w-full">
+        <Navbar wishlist={wishlist} />
+        <Home wishlist={wishlist} setWishlist={setWishlist} />
       </div>
-      <div>
-        <UsersForm />
-      </div>
-<div>
-<UsersList />*/}
-
-</div>
-   </main>
+    </main>
   );
 }
