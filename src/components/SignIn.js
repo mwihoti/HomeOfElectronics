@@ -8,7 +8,8 @@ const SignIn = () => {
         lastname: '',
         email: '',
         password: '',
-         password2: ''
+         password2: '',
+         username: '',
     })
 
     const handleChange = (e) => {
@@ -29,6 +30,13 @@ const SignIn = () => {
                 <strong>FirstName</strong>
                 </h3>
                 <input type="text"  name='firstname' value={data.firstname} className='border m-2 p-2 border-black rounded' onChange={handleChange} required />
+
+            </label>
+            <label className='items-center ' >
+                <h3>
+                <strong>Type your UserName</strong>
+                </h3>
+                <input type="text"  name='username' value={data.username} className='border m-2 p-2 border-black rounded' onChange={handleChange} required />
 
             </label>
 

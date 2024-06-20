@@ -57,8 +57,8 @@ const Navbar = ({ wishlist }) => {
       </div>
       <div>
         
-        <button > <Link href='/sign'>SignIn</Link></button>
-        <button > <Link href='/signIn'>Register</Link></button>
+        <button > <Link href='/sign/signIn'>SignIn</Link></button>
+        <button > <Link href='/sign/signUp'> Login</Link></button>
       </div>
     </div>
   );
