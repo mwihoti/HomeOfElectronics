@@ -2,6 +2,16 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 const UserModel = new mongoose.Schema({
+    firstname: {
+        name: String,
+        required: true,
+        unique: true
+    },
+    lastname: {
+        name: String,
+        required: true,
+        unique: true
+    },
     username: {
         name: String,
         required: true,
