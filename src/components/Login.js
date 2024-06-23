@@ -1,3 +1,4 @@
+
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,52 +8,61 @@ const LoginPage = () => {
     const [data, setData] = useState({
         username: '',
         password: '',
-
     })
-  return (
-    <div className='h-4/5 flex items-center justify-center'>
- 
-        
-    
-    <div className='flex flex-col items-center  justify-center m-32 border w-1/2 ' >
-    <div className='flex gap-10 items-center'>
-    <Image src="/logo.jpeg" alt='logo' width={50} height={50}/>
 
-<h1 className='text center underline font-bold text-xl'>Welcome to HomeOfElectronics</h1>
+    const handleChange = (e) => {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        })
+    }
 
-    </div>
-
-
-
-
-       
-        <form className='grid grid-row w-full  gap-4 max-w-sm p-20'>
-            <label>
-                Username:
-                <input type='text' className='border m-2 p-2 border-black rounded' name='username' required/>
-            </label> 
-            <label>
-                Password:
-                <input type='password' className='border m-2 p-2 border-black rounded' name='password' required/>
-            </label>
-
-            <button type='submit' className='bg-gray-300 p-2 m-3 hover:bg-stone-950 hover:text-white rounded-2xl'>Login</button>
-
-        </form>
-
-        <div>
-            <Link href='/sign/signIn'>
-                <h4>Click here to register</h4>
-                </Link>
-        
-    </div>
-
-    
-    </div>
-    
-
-    </div>
-  )
+    return (
+        <div className='min-h-screen flex items-center justify-center bg-gray-400'>
+            <div className='flex flex-col items-center justify-center bg-gray-300 p-10 rounded-lg shadow-lg w-full max-w-md'>
+                <div className='flex gap-4 items-center mb-6'>
+                    <Image src="/logo.jpeg" alt='logo' width={50} height={50}/>
+                    <h1 className='text-center underline font-bold text-2xl text-blue-600'>Welcome to HomeOfElectronics</h1>
+                </div>
+                <form className='w-full' onSubmit={(e) => e.preventDefault()}>
+                    <div className='mb-4'>
+                        <label className='block text-gray-700'>
+                            Username:
+                            <input 
+                                type='text' 
+                                className='border mt-1 p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-600' 
+                                name='username' 
+                                value={data.username} 
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                    </div>
+                    <div className='mb-6'>
+                        <label className='block text-gray-700'>
+                            Password:
+                            <input 
+                                type='password' 
+                                className='border mt-1 p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-600' 
+                                name='password' 
+                                value={data.password} 
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                    </div>
+                    <button type='submit' className='w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-300'>
+                        Login
+                    </button>
+                </form>
+                <div className='mt-4'>
+                    <Link className='text-blue-600 hover:underline' href='/sign/signIn'>
+                       Click here to register
+                    </Link>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default LoginPage
