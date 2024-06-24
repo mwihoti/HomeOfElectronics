@@ -16,9 +16,10 @@ const apiRoute = nextConnect({
 apiRoute.post(async (req, res) => {
   const { username, password } = req.body;
 
-  await connectToDatabase();
+ 
 
   try {
+    await connectToDatabase();
     const user = await UserModel.findOne({ username });
     
     if (user && (await user.matchPassword(password))) {

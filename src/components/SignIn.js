@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 const SignIn = () => {
+    const router = useRouter();
     const [data, setData] = useState({
         firstname: '',
         lastname: '',
@@ -42,6 +43,7 @@ const SignIn = () => {
 
         if (response.ok) {
             console.log('Registration successful:', result)
+            router.push('/')
         } else {
             console.log('Registation failed', result)
         }

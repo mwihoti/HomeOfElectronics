@@ -1,10 +1,13 @@
-
 'use client'
+import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import cookies from 'js-cookie'
 
 const LoginPage = () => {
+    const router = useRouter(); // Correctly call useRouter
+    const [error, setError] = useState('')
     const [data, setData] = useState({
         username: '',
         password: '',
@@ -29,24 +32,25 @@ const LoginPage = () => {
                 username: data.username,
                 password: data.password
             })
-
         });
 
         const result = await response.json()
 
         if (response.ok) {
-            console.log('Login successFul!', result)
+            console.log('Login Successful', result)
+            cookies.set('token', result.token, { expires: 30 })
+            router.push('/') // Navigate to the home page after successful login
         } else {
             console.error('Login failed:', result);
+            setError(result.message || 'Login failed')
         }
-
     }
 
     return (
         <div className='min-h-screen flex items-center justify-center bg-gray-400'>
             <div className='flex flex-col items-center justify-center bg-gray-300 p-10 rounded-lg shadow-lg w-full max-w-md'>
                 <div className='flex gap-4 items-center mb-6'>
-                    <Image src="/logo.jpeg" alt='logo' width={50} height={50}/>
+                    <Image src="/logo.jpeg" alt='logo' width={50} height={50} />
                     <h1 className='text-center underline font-bold text-2xl text-blue-600'>Welcome to HomeOfElectronics</h1>
                 </div>
                 <form className='w-full' onSubmit={handleSubmit}>
