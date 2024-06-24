@@ -23,7 +23,7 @@ apiRoute.post(async (req, res) => {
     const user = await UserModel.findOne({ username });
     
     if (user && (await user.matchPassword(password))) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+      const token = jwt.sign({ id: user._id, username:user.username }, process.env.JWT_SECRET, { expiresIn: '30d' });
 
       return res.status(200).json({
         _id: user._id,

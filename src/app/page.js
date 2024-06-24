@@ -21,7 +21,7 @@ export default function App() {
 
   if (!user) {
     if (typeof window !== 'undefined') {
-      window.location.href = '/sign/signIn'
+      window.location.href = '/sign/signUp'
     }
     return null
   }

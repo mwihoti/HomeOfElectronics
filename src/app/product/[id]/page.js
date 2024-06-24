@@ -98,7 +98,7 @@ const ProductDetail = () => {
           </div>
           <div className='flex gap-4'>
           <button className="mt-4 px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-lg">Add to Cart</button>
-          <button className="mt-4 px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-lg">Continue shopping</button>
+          <button className="mt-4 px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-lg"><Link href='/'>Continue shopping</Link></button>
 
           </div>
           <div className='gap-8'>

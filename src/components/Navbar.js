@@ -13,7 +13,12 @@ const Navbar = ({ wishlist }) => {
 
 
   const handleWishlistClick = () => {
-    router.push('/wishlist');
+    if (user) {
+      router.push('/wishlist');
+    } else {
+      router.push('/sign/signUp');
+    }
+    
   };
 
   const handleLogout = () => {
@@ -44,7 +49,7 @@ const Navbar = ({ wishlist }) => {
             <Link href='/product'>Orders</Link>
           </li>
           <li>
-            <Link href='/home'>About us</Link>
+            <Link href='/cart'>About us</Link>
           </li>
         </ul>
       </div>
@@ -52,7 +57,7 @@ const Navbar = ({ wishlist }) => {
       <div className='flex gap-4'>
         <h4>
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
-          Cart
+          <Link href='/cart'>Cart</Link>
         </h4>
         { user ? (
           <>
