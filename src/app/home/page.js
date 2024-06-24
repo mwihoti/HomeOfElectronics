@@ -4,11 +4,15 @@ import React, { useState, useEffect } from 'react';
 import ProductList from '@/components/ProductList';
 
 const Home = () => {
-  const [wishlist, setWishlist] = useState(() => {
+  const [wishlist, setWishlist] = useState([]);
+
+  useEffect(() => {
     // Initialize wishlist from localStorage if available
     const savedWishlist = localStorage.getItem('wishlist');
-    return savedWishlist ? JSON.parse(savedWishlist) : [];
-  });
+    if (savedWishlist) {
+      setWishlist(JSON.parse(savedWishlist));
+    }
+  }, []); // Run this effect only once, on mount
 
   useEffect(() => {
     // Save wishlist to localStorage whenever it changes

@@ -1,53 +1,62 @@
 import nextConnect from 'next-connect';
 import { connectToDatabase } from '@/lib/mongodb';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import UserModel from '@/models/UserModel';
 
-
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({message: 'Method not allowed'});
-    }
-
-
-const {firstname, lastname, username, email, password} = req.body;
-
-await connectToDatabase();
-try {
-    const UserExists = await User.findOne({firstname, email, username})
-if (UserExists) {
-    return res.status(400).json('User Already exists')
-}
-
-const user = await UserModel.create({
-    firstname,
-    lastname,
-    username,
-    email,
-    password
+const handler = nextConnect({
+    onError(error, req, res) {
+        console.error(error);
+        res.status(501).json({ error: `Sorry, something happened! ${error.message}` });
+    },
+    onNoMatch(req, res) {
+        res.status(405).json({ error: 'Method not allowed' });
+    },
 });
 
-if (user) {
-    const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
-        expiresIn: '30d',
-    });
+handler.post(async (req, res) => {
+    const { firstname, lastname, username, email, password, password2 } = req.body;
 
-    return res.status(201).json({
-        _id: user._id,
-        username: user.username,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        password: user.password,
-        token
-    });
-} else {
-    return res.status(400).json({message: 'Invalid user data'});
+    await connectToDatabase();
 
-}
-} catch (error) {
-    return res.status(500).json({message: 'Server error'})
-}
+    try {
+        // Check if the user already exists by email or username
+        const userExists = await UserModel.findOne({ $or: [{ email }, { username }] });
+        if (userExists) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
 
-}
+        // Create a new user
+        const user = await UserModel.create({
+            firstname,
+            lastname,
+            username,
+            email,
+            password,
+            password2
+        });
 
+        if (user) {
+            // Create a token for the user
+          //  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+          //      expiresIn: '30d',
+       //     });
+
+            // Return the user data and token
+            return res.status(201).json({
+                _id: user._id,
+                username: user.username,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+            
+            });
+        } else {
+            return res.status(400).json({ message: 'Invalid user data' });
+        }
+    } catch (error) {
+        console.error('Server error:', error); // Add this line for detailed error logging
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+export default handler;

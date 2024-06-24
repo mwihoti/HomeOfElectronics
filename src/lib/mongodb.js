@@ -10,24 +10,24 @@ let gfs;
 
 const connectToDatabase = async () => {
   if (mongoose.connection.readyState >= 1) {
-    return;
+    return mongoose.connection;
   }
 
-  const conn = await mongoose.connect(mongoURI, {
-    
+  await mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   });
 
-  conn.once('open', () => {
-    gfs = Grid(conn.db, mongoose.mongo);
+  mongoose.connection.once('open', () => {
+    gfs = Grid(mongoose.connection.db, mongoose.mongo);
     gfs.collection('uploads');
   });
 
-  return conn;
+  return mongoose.connection;
 };
 
 const storage = new GridFsStorage({
   url: mongoURI,
-  
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
@@ -47,5 +47,4 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-export  { connectToDatabase, upload, gfs };
-   
+export { connectToDatabase, upload, gfs };

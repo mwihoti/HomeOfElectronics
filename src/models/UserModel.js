@@ -3,25 +3,25 @@ import bcrypt from "bcryptjs";
 
 const UserModel = new mongoose.Schema({
     firstname: {
-        name: String,
+        type: String,
         required: true,
-        unique: true
+       
     },
     lastname: {
-        name: String,
+        type: String,
         required: true,
-        unique: true
+       
     },
     username: {
-        name: String,
+        type: String,
         required: true,
         unique: true
     },
     email: {
-        name: String,
+        type: String,
         required: true,
         unique: true,
-        match: [/.+\@.+\..}/, 'Please enter a valid email address']
+        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
     },
     password: {
         type: String,

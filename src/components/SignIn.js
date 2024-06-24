@@ -19,6 +19,34 @@ const SignIn = () => {
             [e.target.name]: e.target.value
         })
     }
+    const handleSubmit = async  (e) => {
+        e.preventDefault();
+
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify({
+                firstname: data.firstname,
+                lastname: data.lastname,
+                password: data.password,
+                username: data.username,
+                email: data.email,
+                password2: data.password2
+            }),
+        })
+
+        const result = await response.json()
+
+        if (response.ok) {
+            console.log('Registration successful:', result)
+        } else {
+            console.log('Registation failed', result)
+        }
+
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-400">
@@ -29,7 +57,7 @@ const SignIn = () => {
                         Welcome to HomeOfElectronics
                     </h1>
                 </div>
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-4" onSubmit={handleSubmit}>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">First Name</label>
                         <input 
