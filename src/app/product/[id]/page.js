@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 
 const ProductDetail = () => {
   const params = useParams();
@@ -11,6 +12,20 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [numItems, setNumItems] = useState(1);
+  const [wishlist, setWishlist] = useState([]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      setWishlist(savedWishlist);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+  
+      
 
   useEffect(() => {
     if (!id) return;
@@ -40,7 +55,12 @@ const ProductDetail = () => {
   if (!product) return <p>No product found</p>;
 
   return (
+    <div>
+        <Navbar wishlist={wishlist} />
+
+   
     <div className=" container mx-auto ">
+     
       <h2 className=" my-4 text-center">Product selected</h2> 
       <div className='grid grid-cols-2 space-x-6'>
 
@@ -94,6 +114,7 @@ const ProductDetail = () => {
     
       
      
+    </div>
     </div>
     </div>
   );

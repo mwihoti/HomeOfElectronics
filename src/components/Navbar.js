@@ -3,13 +3,23 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+
 
 const Navbar = ({ wishlist }) => {
   const router = useRouter();
+  const {user, logout} = useAuth();
+
+
 
   const handleWishlistClick = () => {
     router.push('/wishlist');
   };
+
+  const handleLogout = () => {
+    logout();
+    router.push('/sign/signUp')
+  }
 
   return (
     <div className='flex p-4 justify-between bg-[#406ca9] text-white'>
@@ -28,7 +38,7 @@ const Navbar = ({ wishlist }) => {
       <div className='flex'>
         <ul className='flex gap-10'>
           <li>
-            <Link href='/home'>Home</Link>
+            <Link href='/'>Home</Link>
           </li>
           <li>
             <Link href='/product'>Orders</Link>
@@ -44,10 +54,26 @@ const Navbar = ({ wishlist }) => {
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
           Cart
         </h4>
-        <h4>
+        { user ? (
+          <>
+          <h4>
           <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
-          User
+          {user.username}
         </h4>
+        <button onClick={handleLogout} className='border rounded-xl p-2 m-3'>Logout</button>
+          </>
+        ): (
+          <div className='gap-3 flex'>
+            <h4>
+          <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
+          user
+        </h4>
+        
+        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signIn'>SignIn</Link></button>
+        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signUp'> Login</Link></button>
+      </div>
+        )}
+        
         <h4>
           <button className='flex items-center gap-1' onClick={handleWishlistClick}>
             <Image className='rounded object-fill' src='/wishlist.png' alt='wishlist' width={40} height={30} />
@@ -55,11 +81,7 @@ const Navbar = ({ wishlist }) => {
           </button>
         </h4>
       </div>
-      <div className='gap-3 flex'>
-        
-        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signIn'>SignIn</Link></button>
-        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signUp'> Login</Link></button>
-      </div>
+      
     </div>
   );
 };
