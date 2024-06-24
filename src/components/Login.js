@@ -17,6 +17,31 @@ const LoginPage = () => {
         })
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: data.username,
+                password: data.password
+            })
+
+        });
+
+        const result = await response.json()
+
+        if (response.ok) {
+            console.log('Login successFul!', result)
+        } else {
+            console.error('Login failed:', result);
+        }
+
+    }
+
     return (
         <div className='min-h-screen flex items-center justify-center bg-gray-400'>
             <div className='flex flex-col items-center justify-center bg-gray-300 p-10 rounded-lg shadow-lg w-full max-w-md'>
@@ -24,7 +49,7 @@ const LoginPage = () => {
                     <Image src="/logo.jpeg" alt='logo' width={50} height={50}/>
                     <h1 className='text-center underline font-bold text-2xl text-blue-600'>Welcome to HomeOfElectronics</h1>
                 </div>
-                <form className='w-full' onSubmit={(e) => e.preventDefault()}>
+                <form className='w-full' onSubmit={handleSubmit}>
                     <div className='mb-4'>
                         <label className='block text-gray-700'>
                             Username:
