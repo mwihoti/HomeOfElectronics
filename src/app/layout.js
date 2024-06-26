@@ -14,12 +14,14 @@ export default function RootLayout({ children }) {
   
   return (
     <html lang="en">
+      
       <head>
       
       </head>
       
       <body className="min-h-screen" >
-        <AuthProvider>
+      <AuthProvider>
+       
         {children}
         <Footer className="absolute bottom-0 m-3" />
         </AuthProvider>
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
       
         
         </body>
+       
        
         
     </html>

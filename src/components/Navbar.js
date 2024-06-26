@@ -5,12 +5,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
-
 const Navbar = ({ wishlist }) => {
   const router = useRouter();
-  const {user, logout} = useAuth();
-
-
+  const { user, logout } = useAuth();
 
   const handleWishlistClick = () => {
     if (user) {
@@ -18,24 +15,18 @@ const Navbar = ({ wishlist }) => {
     } else {
       router.push('/sign/signUp');
     }
-    
   };
 
   const handleLogout = () => {
     logout();
-    router.push('/sign/signUp')
-  }
+    router.push('/sign/signUp');
+  };
 
   return (
     <div className='flex p-4 justify-between bg-[#406ca9] text-white'>
       <div className='flex justify-center space-x-28'>
         <div className='flex gap-4 items-center'>
-          <Image
-            src="/logo.jpeg"
-            alt="shop Logo"
-            width={60}
-            height={50}
-          />
+          <Image src="/logo.jpeg" alt="shop Logo" width={60} height={50} />
           <h2 className="text-2xl text-black font-bold">HomeOfElctronics</h2>
         </div>
       </div>
@@ -59,26 +50,28 @@ const Navbar = ({ wishlist }) => {
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
           <Link href='/cart'>Cart</Link>
         </h4>
-        { user ? (
+        {user ? (
           <>
-          <h4>
-          <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
-          {user.username}
-        </h4>
-        <button onClick={handleLogout} className='border rounded-xl p-2 m-3'>Logout</button>
+            <h4>
+              <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
+              {user.username}
+            </h4>
+            <button onClick={handleLogout} className='border rounded-xl p-2 m-3'>Logout</button>
           </>
-        ): (
+        ) : (
           <div className='gap-3 flex'>
             <h4>
-          <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
-          user
-        </h4>
-        
-        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signIn'>SignIn</Link></button>
-        <button className='border rounded-xl p-2 m-3' > <Link href='/sign/signUp'> Login</Link></button>
-      </div>
+              <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
+              User
+            </h4>
+            <button className='border rounded-xl p-2 m-3'>
+              <Link href='/sign/signIn'>Sign In</Link>
+            </button>
+            <button className='border rounded-xl p-2 m-3'>
+              <Link href='/sign/signUp'>Login</Link>
+            </button>
+          </div>
         )}
-        
         <h4>
           <button className='flex items-center gap-1' onClick={handleWishlistClick}>
             <Image className='rounded object-fill' src='/wishlist.png' alt='wishlist' width={40} height={30} />
@@ -86,7 +79,6 @@ const Navbar = ({ wishlist }) => {
           </button>
         </h4>
       </div>
-      
     </div>
   );
 };
