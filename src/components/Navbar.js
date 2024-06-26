@@ -4,10 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
 
 const Navbar = ({ wishlist }) => {
   const router = useRouter();
   const { user, logout } = useAuth();
+  const {getTotalItems} = useCart();
 
   const handleWishlistClick = () => {
     if (user) {
@@ -21,6 +23,8 @@ const Navbar = ({ wishlist }) => {
     logout();
     router.push('/sign/signUp');
   };
+
+
 
   return (
     <div className='flex p-4 justify-between bg-[#406ca9] text-white'>
@@ -48,7 +52,7 @@ const Navbar = ({ wishlist }) => {
       <div className='flex gap-4'>
         <h4>
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
-          <Link href='/cart'>Cart</Link>
+          <Link href='/cart'>Cart ({getTotalItems()})</Link>
         </h4>
         {user ? (
           <>

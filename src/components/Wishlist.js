@@ -4,7 +4,7 @@ import React from 'react';
 const Wishlist = ({ wishlist }) => {
     const wishlistArray = Array.isArray(wishlist) ? wishlist : [];
   return (
-    <div className='mx-auto text-center'>
+    <div className='mx-auto  text-center'>
       <h3>Your wishlist</h3>
       <div className='justify-center m-3'>
         {wishlistArray.length === 0 ? (

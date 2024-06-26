@@ -15,7 +15,7 @@ const WishlistPage = () => {
         }
     }, [])
   return (
-    <div>
+    <div className='h-screen'>
          <Navbar wishlist={wishlist} />
         <Wishlist wishlist={wishlist} />       
     </div>
