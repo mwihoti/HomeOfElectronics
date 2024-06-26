@@ -2,7 +2,9 @@
   import "./globals.css";
   import { AuthProvider } from "@/context/AuthContext"
   import Footer from "@/components/Footer";
-import { CartProvider } from "@/context/CartContext";
+  import { CartProvider } from "@/context/CartContext";
+  import { WishlistProvider } from "@/context/WishlistContext";
+
   const inter = Inter({ subsets: ["latin"] });
 
 
@@ -23,8 +25,10 @@ import { CartProvider } from "@/context/CartContext";
         <body className="min-h-screen" >
         <AuthProvider>
         <CartProvider>
+          <WishlistProvider>
             {children}
             <Footer className="absolute bottom-0 m-3" />
+            </WishlistProvider>
           </CartProvider>
           </AuthProvider>
       

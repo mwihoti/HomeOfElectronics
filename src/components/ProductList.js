@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-
+import WishlistButton from '@/components/WishlistButton';
 const ProductList = ({ wishlist, setWishlist }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,25 +68,25 @@ const ProductList = ({ wishlist, setWishlist }) => {
     router.push(`/product/${productId}`);
   };
 
-  const addToWishlist = (productId) => {
-    const productToAdd = products.find((product) => product._id === productId);
-    if (!productToAdd) {
-      console.error(`Product with id ${productId} not found`);
-      return;
-    }
+  //const addToWishlist = (productId) => {
+  //  const productToAdd = products.find((product) => product._id === productId);
+   // if (!productToAdd) {
+  //    console.error(`Product with id ${productId} not found`);
+  //    return;
+  //  }
     
-    if (!wishlist) {
-      setWishlist([productToAdd]);
-      localStorage.setItem('wishlist', JSON.stringify([productToAdd]));
-      return;
-    }
+  //  if (!wishlist) {
+  //    setWishlist([productToAdd]);
+  //    localStorage.setItem('wishlist', JSON.stringify([productToAdd]));
+  //   return;
+  //  }
     
-    if (!wishlist.some((item) => item._id === productId)) {
-      const newWishlist = [...wishlist, productToAdd];
-      setWishlist(newWishlist);
-      localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-    }
-  };
+   // if (!wishlist.some((item) => item._id === productId)) {
+  //    const newWishlist = [...wishlist, productToAdd];
+   //   setWishlist(newWishlist);
+   //   localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+   // }
+  //};
   
 
   if (loading) {
