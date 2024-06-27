@@ -10,7 +10,7 @@ const withAuth = (WrappedComponents) => {
 
         useEffect(() => {
             if (!user) {
-                router.push('/sign/signUp')
+                router.push('/signUp')
             }
         }, [user, router]);
         return <WrappedComponents {...props} />

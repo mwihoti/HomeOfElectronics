@@ -3,7 +3,7 @@
   import React, { useEffect, useState } from 'react';
   import Image from 'next/image';
   import Link from 'next/link';
-  import Navbar from '@/components/Navbar';
+
   import withAuth from '@/hoc/withAuth';
 
   const ProductDetail = () => {
@@ -13,18 +13,18 @@
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [numItems, setNumItems] = useState(1);
-    const [wishlist, setWishlist] = useState([]);
+  //  const [wishlist, setWishlist] = useState([]);
 
-    useEffect(() => {
-      if (typeof window !== 'undefined') {
-        const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-        setWishlist(savedWishlist);
-      }
-    }, []);
+    //useEffect(() => {
+    //  if (typeof window !== 'undefined') {
+   //     const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    //    setWishlist(savedWishlist);
+     // }
+   // }, []);
 
-    useEffect(() => {
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    }, [wishlist]);
+   // useEffect(() => {
+   //   localStorage.setItem('wishlist', JSON.stringify(wishlist));
+   // }, [wishlist]);
     
         
 
@@ -57,7 +57,7 @@
 
     return (
       <div>
-          <Navbar wishlist={wishlist} />
+        
 
     
       <div className=" container mx-auto ">

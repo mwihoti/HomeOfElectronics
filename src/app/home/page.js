@@ -4,20 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ProductList from '@/components/ProductList';
 
 const Home = () => {
-  const [wishlist, setWishlist] = useState([]);
-
-  useEffect(() => {
-    // Initialize wishlist from localStorage if available
-    const savedWishlist = localStorage.getItem('wishlist');
-    if (savedWishlist) {
-      setWishlist(JSON.parse(savedWishlist));
-    }
-  }, []); // Run this effect only once, on mount
-
-  useEffect(() => {
-    // Save wishlist to localStorage whenever it changes
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-  }, [wishlist]);
+  
 
   return (
     <div className='text-center text-black bg-[#f5f7fa]'>
@@ -38,7 +25,7 @@ const Home = () => {
           </li>
         </ul>
       </div>
-      <ProductList wishlist={wishlist} setWishlist={setWishlist} />
+      <ProductList />
     </div>
   );
 };

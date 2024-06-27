@@ -5,23 +5,26 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
+import { useWishlist } from '@/context/WishlistContext';
 
-const Navbar = ({ wishlist }) => {
+
+const Navbar = () => {
   const router = useRouter();
   const { user, logout } = useAuth();
   const {getTotalItems} = useCart();
+  const {wishlist, addToWishlist} = useWishlist();
 
   const handleWishlistClick = () => {
     if (user) {
       router.push('/wishlist');
     } else {
-      router.push('/sign/signUp');
+      router.push('/signUp');
     }
   };
 
   const handleLogout = () => {
     logout();
-    router.push('/sign/signUp');
+    router.push('/signUp');
   };
 
 
@@ -54,6 +57,7 @@ const Navbar = ({ wishlist }) => {
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
           <Link href='/cart'>Cart ({getTotalItems()})</Link>
         </h4>
+        
         {user ? (
           <>
             <h4>
@@ -69,10 +73,10 @@ const Navbar = ({ wishlist }) => {
               User
             </h4>
             <button className='border rounded-xl p-2 m-3'>
-              <Link href='/sign/signIn'>Sign In</Link>
+              <Link href='/signIn'>Sign In</Link>
             </button>
             <button className='border rounded-xl p-2 m-3'>
-              <Link href='/sign/signUp'>Login</Link>
+              <Link href='/signUp'>Login</Link>
             </button>
           </div>
         )}

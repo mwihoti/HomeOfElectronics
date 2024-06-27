@@ -85,7 +85,7 @@ const LoginPage = () => {
                     </button>
                 </form>
                 <div className='mt-4'>
-                    <Link className='text-blue-600 hover:underline' href='/sign/signIn'>
+                    <Link className='text-blue-600 hover:underline' href='/signIn'>
                        Click here to register
                     </Link>
                 </div>

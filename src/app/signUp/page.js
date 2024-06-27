@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar'
 const SignUpPage = () => {
   return (
     <div>
-      <Navbar/>
+   
         <Login/>
     </div>
   )

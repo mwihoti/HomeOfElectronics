@@ -1,37 +1,45 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Home from './home/page';
 import Navbar from '@/components/Navbar';
-import { useAuth } from '@/context/AuthContext';
+import Footer from '@/components/Footer';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
+import { CartProvider } from '@/context/CartContext';
+import { WishlistProvider } from '@/context/WishlistContext';
 
-export default function App() {
-  const { user } = useAuth();
-  const [wishlist, setWishlist] = useState([]);
+function ProtectedLayout({ children }) {
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-      setWishlist(savedWishlist);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-  }, [wishlist]);
+  if (loading) {
+    return <div>Loading...</div>; // Add a loading indicator
+  }
 
   if (!user) {
     if (typeof window !== 'undefined') {
-      window.location.href = '/sign/signUp'
+      window.location.href = '/sign/signUp';
     }
-    return null
+    return null;
   }
- 
+
+  return <>{children}</>;
+}
+
+export default function App() {
   return (
-    <main className="">
-      <div className="w-full">
-        <Navbar wishlist={wishlist} />
-        <Home wishlist={wishlist} setWishlist={setWishlist} />
-      </div>
-    </main>
+    
+      <CartProvider>
+       
+      
+          
+            <main className="">
+              <div className="w-full">
+                <Home />
+              </div>
+            </main>
+           
+         
+        
+      </CartProvider>
+   
   );
 }

@@ -1,23 +1,21 @@
+'use client';
 import { createContext, useContext, useState, useEffect } from "react";
-
 
 const WishlistContext = createContext();
 
-export const useWishlist = () => useContext(WishlistContext);
+const useWishlist = () => useContext(WishlistContext);
 
-export const WishlistProvider = ({ children }) => {
+const WishlistProvider = ({ children }) => {
     const [wishlist, setWishlist] = useState([]);
 
-    useEffect (() => {
+    useEffect(() => {
         const storedWishlist = localStorage.getItem('wishlist');
-
-        if (storedWishlist) 
-            {
-                setWishlist(JSON.parse(storedWishlist))
-            }
+        if (storedWishlist) {
+            setWishlist(JSON.parse(storedWishlist));
+        }
     }, []);
 
-    useEffect (() => {
+    useEffect(() => {
         localStorage.setItem('wishlist', JSON.stringify(wishlist));
     }, [wishlist]);
 
@@ -32,12 +30,14 @@ export const WishlistProvider = ({ children }) => {
     }
 
     const removeFromWishlist = (productId) => {
-        setWishlist((prevWishlist) => prevWishlist.filter((item) => item._id !== productId ))
+        setWishlist((prevWishlist) => prevWishlist.filter((item) => item._id !== productId));
     }
 
     return (
-        <WishlistContext.Provider value={{addToWishlist, removeFromWishlist, wishlist}}>
+        <WishlistContext.Provider value={{ addToWishlist, removeFromWishlist, wishlist }}>
             {children}
         </WishlistContext.Provider>
-    )
+    );
 }
+
+export { WishlistProvider, useWishlist, WishlistContext };

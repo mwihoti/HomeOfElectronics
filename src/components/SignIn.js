@@ -135,7 +135,7 @@ const SignIn = () => {
                     </button>
                 </form>
                 <div className="mt-4 text-center">
-                    <Link className="text-blue-600 hover:underline" href="/sign/signUp">
+                    <Link className="text-blue-600 hover:underline" href="/signUp">
                         
                             <strong>Already registered?</strong> Click here to Login
                        

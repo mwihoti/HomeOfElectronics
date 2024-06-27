@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useWishlist } from '@/context/WishlistContext';
 
-const WishlistButton = () => {
+const WishlistButton = ({ product }) => {
     const { addToWishlist, wishlist} = useWishlist();
 
     const handleAddtoWishlist = (e) => {

@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar'
 const SignInPage = () => {
   return (
     <div>
-       <Navbar/> 
+     
       <SignIn /></div>
   )
 }

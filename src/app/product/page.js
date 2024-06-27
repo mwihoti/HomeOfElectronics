@@ -6,21 +6,10 @@ import Navbar from '@/components/Navbar'
 
 const ProductPage = () => {
 
-  const [wishlist, setWishlist] = useState([]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-      setWishlist(savedWishlist);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-  }, [wishlist]);
+ 
   return (
     <div>
-       <Navbar wishlist={wishlist} />
+
         <h1>
             Add Products
         </h1>

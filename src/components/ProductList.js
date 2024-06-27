@@ -146,16 +146,7 @@ const ProductList = ({ wishlist, setWishlist }) => {
               </div>
             
               <div className="flex">
-                <button
-                  className="p-2 border inset-1 ml-20 m-2 rounded"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addToWishlist(product._id);
-                  }}
-                >
-                  <h3 className="text-center">Add to</h3>
-                  <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={20} height={20} />
-                </button>
+                <WishlistButton product={product} />
               </div>
             </li>
           ))}
