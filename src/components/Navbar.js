@@ -11,7 +11,7 @@ import { useWishlist } from '@/context/WishlistContext';
 const Navbar = () => {
   const router = useRouter();
   const { user, logout } = useAuth();
-  const {cart, getTotalItems} = useCart();
+  const {cart, getTotalItems, getTotalUniqueItems} = useCart();
   const {wishlist, addToWishlist} = useWishlist();
 
   const handleWishlistClick = () => {
@@ -62,7 +62,7 @@ const Navbar = () => {
           <button button className='flex items-center gap-1' onClick={handleAddtoCart}>
           <h4>
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
-          <Link href='/cart'>Cart ({getTotalItems()})</Link>
+          <Link href='/cart'>Cart ({getTotalUniqueItems()})</Link>
         </h4>
 
           </button>
