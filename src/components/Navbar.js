@@ -11,16 +11,21 @@ import { useWishlist } from '@/context/WishlistContext';
 const Navbar = () => {
   const router = useRouter();
   const { user, logout } = useAuth();
-  const {getTotalItems} = useCart();
+  const {cart, getTotalItems} = useCart();
   const {wishlist, addToWishlist} = useWishlist();
 
   const handleWishlistClick = () => {
-    if (user) {
+   
       router.push('/wishlist');
-    } else {
-      router.push('/signUp');
-    }
+      
   };
+  const handleAddtoCart = () => {
+  
+      router.push('/cart');
+   
+   
+    
+  }
 
   const handleLogout = () => {
     logout();
@@ -53,10 +58,15 @@ const Navbar = () => {
       </div>
 
       <div className='flex gap-4'>
-        <h4>
+        
+          <button button className='flex items-center gap-1' onClick={handleAddtoCart}>
+          <h4>
           <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
           <Link href='/cart'>Cart ({getTotalItems()})</Link>
         </h4>
+
+          </button>
+         
         
         {user ? (
           <>

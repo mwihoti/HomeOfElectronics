@@ -3,9 +3,7 @@ import React from 'react';
 import Home from './home/page';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { AuthProvider, useAuth } from '@/context/AuthContext';
-import { CartProvider } from '@/context/CartContext';
-import { WishlistProvider } from '@/context/WishlistContext';
+import { useAuth } from '@/context/AuthContext';
 
 function ProtectedLayout({ children }) {
   const { user, loading } = useAuth();
@@ -27,7 +25,7 @@ function ProtectedLayout({ children }) {
 export default function App() {
   return (
     
-      <CartProvider>
+  
        
       
           
@@ -39,7 +37,7 @@ export default function App() {
            
          
         
-      </CartProvider>
+     
    
   );
 }

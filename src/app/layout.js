@@ -26,13 +26,17 @@ export default function RootLayout({ children }) {
 
       <body className="min-h-screen" >
         <AuthProvider>
+       
         <WishlistProvider >
-      <CartProvider>
+         <CartProvider>
       <Navbar /> 
         {children}
         <Footer  className="absolute bottom-0 m-3"/> 
         </CartProvider>
+     
+        
         </WishlistProvider>
+       
         </AuthProvider>
       </body>
 

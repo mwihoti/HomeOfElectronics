@@ -1,7 +1,7 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode'; // Ensure the correct import
+import { jwtDecode } from 'jwt-decode'; // Import jwtDecode instead of jwt-decode
 
 const AuthContext = createContext();
 
@@ -16,7 +16,7 @@ const decodeToken = (token) => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = cookies.get('token');
@@ -25,11 +25,10 @@ export const AuthProvider = ({ children }) => {
       if (decodedUser) {
         setUser(decodedUser);
       } else {
-        // Token is invalid, remove it
         cookies.remove('token');
       }
     }
-    setLoading(false); // Set loading to false after checking token
+    setLoading(false);
   }, []);
 
   const login = (userData) => {
