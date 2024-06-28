@@ -6,9 +6,9 @@ import { CartProvider } from '@/context/CartContext';
 
 const cartPage = () => {
   return (
-    <div>
+    <div className='h-screen '>
       
-        <Cart />
+        <Cart className=""/>
        
     </div>
   )

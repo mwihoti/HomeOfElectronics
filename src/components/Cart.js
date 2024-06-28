@@ -4,8 +4,10 @@ import React from 'react';
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const Cart = () => {
+  const router = useRouter()
   const { cart, removeFromCart, updateCartItemQuantity, getTotalPrice, getTotalUniqueItems, countQuantityAdded } = useCart();
   console.log('cart items', cart);
 
@@ -17,8 +19,12 @@ const Cart = () => {
     return <p>Your cart is empty</p>;
   }
 
+  const handlePayment = () => {
+    router.push('/payment')
+  }
+
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto p-30 m-20'>
       <h2 className='my-4 text-center'>Your Cart</h2>
       <ul className="space-y-4">
         {cart.map((item) => (
@@ -49,7 +55,7 @@ const Cart = () => {
       <div className='flex justify-between mt-4'>
         <p>Total Unique Items: {getTotalUniqueItems()}</p>
         <p>Total: Ksh {getTotalPrice()}</p>
-        <button className='border px-4 py-2 bg-yellow-500 text-white rounded'>Proceed to Payment</button>
+        <button className='border px-4 py-2 bg-yellow-500 text-white rounded' onClick={handlePayment}>Proceed to Payment</button>
       </div>
       <button className='mt-4 px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-lg'>
         <Link href='/'>Continue shopping</Link>
