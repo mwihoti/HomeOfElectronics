@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/client": "^6.20.1",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.48.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.2.0",
     "datauri": "^4.1.0",
@@ -22,8 +25,12 @@
     "next": "14.2.3",
     "next-cloudinary": "^6.6.2",
     "next-connect": "^0.12.1",
+    "next-sanity": "^9.4.2",
+    "next-sanity-image": "^6.1.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sanity": "^3.48.1",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "postcss": "^8",

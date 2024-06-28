@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import WishlistButton from '@/components/WishlistButton';
-const ProductList = ({ wishlist, setWishlist }) => {
+import { client } from '@/lib/client';
+const ProductList = ({ products}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,6 +33,9 @@ const ProductList = ({ wishlist, setWishlist }) => {
 
     fetchProducts();
   }, []);
+  <div>
+    {products?.map((productItem) => <Product key= {productItem._id} product={productItem} />)}
+  </div>
 
   const handleMouseEnter = (productId) => {
     const productIndex = products.findIndex((product) => product._id === productId);
@@ -154,6 +158,17 @@ const ProductList = ({ wishlist, setWishlist }) => {
       </div>
     </div>
   );
-};
+
+
+  }
+
+  export const getServerSideProps = async (  ) => {
+    const query = '*[_type == "product"]'
+    const products = await client.fetch(query);
+
+    return {
+      props: {products}
+    }
+  }
 
 export default ProductList;
