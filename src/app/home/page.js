@@ -1,7 +1,8 @@
 'use client';
 import Image from 'next/image';
 
-import ProductList from '@/components/ProductList';
+
+import ProductList from '@/components/Product';
 
 const Home = () => {
   
@@ -25,7 +26,7 @@ const Home = () => {
           </li>
         </ul>
       </div>
-      <ProductList />
+       <ProductList />
     </div>
   );
 };

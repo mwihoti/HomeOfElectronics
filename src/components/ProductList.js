@@ -5,34 +5,40 @@ import React, { useEffect, useState } from 'react';
 import WishlistButton from '@/components/WishlistButton';
 import { client } from '@/lib/client';
 const ProductList = ({ products}) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const router = useRouter();
+  const router  = useRouter();  
+  const [products, setProducts] = useState(
+    initialProducts.map(product => ({
+      ...product,
+      currentImage: product.images[0],
+      intervalId: null, })) 
+  );
+  //const [loading, setLoading] = useState(true);
+  //const [error, setError] = useState(null);
+  //const router = useRouter();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/api/getProducts', {
-          headers: {
-            'Cache-Control': 'no-cache',
-          },
-        });
-        const data = await response.json();
-        if (response.ok) {
-          setProducts(data);
-        } else {
-          setError(data.message);
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //useEffect(() => {
+    //const fetchProducts = async () => {
+      //try {
+        //const response = await fetch('/api/getProducts', {
+          //headers: {
+            //'Cache-Control': 'no-cache',
+          //},
+        //});
+        //const data = await response.json();
+        //if (response.ok) {
+        //  setProducts(data);
+       // } else {
+       ///   setError(data.message);
+      //  }
+     // } catch (error) {
+     //   setError(error.message);
+    //  } finally {
+   //     setLoading(false);
+    //  }
+   // };
 
-    fetchProducts();
-  }, []);
+   // fetchProducts();
+ // }, []);
   <div>
     {products?.map((productItem) => <Product key= {productItem._id} product={productItem} />)}
   </div>
