@@ -70,7 +70,7 @@ const ProductList = ({ initialProducts = [] }) => {
   if (products.length === 0) {
     return (
       <div className="mx-auto p-4">
-        <h3 className="mb-4 items-center">Our collections</h3>
+        <h3 className="mb-4 text-center">Our Collections</h3>
         <p>No products available.</p>
       </div>
     );
@@ -78,40 +78,33 @@ const ProductList = ({ initialProducts = [] }) => {
 
   return (
     <div className="mx-auto p-4">
-      <h3 className="mb-4 items-center">Our collections</h3>
-      <div className="justify-center m-3">
-        <ul className="p-3 m-2 space-between text-black gap-8 grid grid-cols-4 divide-x">
-          {products.map((product) => (
-            <li
-              key={product._id}
-              className="bg-gray-200 border m-2"
-              onMouseEnter={() => handleMouseEnter(product._id)}
-              onMouseLeave={() => handleMouseLeave(product._id)}
-              onClick={() => handleClick(product._id)}
-            >
-              <div className="w-full p-3">
-                <img
-                  src={product.currentImage}
-                  loading="lazy"
-                  className="object-fill object-center h-40 w-full"
-                  alt={product.name}
-                  priority
-                />
-              </div>
-              <h4>Product name: {product.name}</h4>
-              <div className="flex gap-10 justify-center m-2">
-                <p>
-                  <strong>Price Ksh: </strong>
-                  {product.price}
-                </p>
-               
-              </div>
-              <div className="flex">
-                <WishlistButton product={product} />
-              </div>
-            </li>
-          ))}
-        </ul>
+      <h3 className="mb-4 text-center">Our Collections</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {products.map((product) => (
+          <li
+            key={product._id}
+            className="bg-gray-200 border p-4 rounded-lg hover:shadow-lg transition-shadow duration-300"
+            onMouseEnter={() => handleMouseEnter(product._id)}
+            onMouseLeave={() => handleMouseLeave(product._id)}
+            onClick={() => handleClick(product._id)}
+          >
+            <div className="w-full p-3">
+              <img
+                src={product.currentImage}
+                loading="lazy"
+                className="object-fill object-center h-40 w-full rounded-lg"
+                alt={product.name}
+              />
+            </div>
+            <h4 className="mt-2 text-lg font-bold">{product.name}</h4>
+            <div className="flex justify-between items-center mt-2">
+              <p className="text-lg font-semibold">Ksh: {product.price}</p>
+            </div>
+            <div className="flex justify-center mt-2">
+              <WishlistButton product={product} />
+            </div>
+          </li>
+        ))}
       </div>
     </div>
   );

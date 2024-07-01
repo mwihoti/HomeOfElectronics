@@ -1,36 +1,28 @@
 'use client';
 import Image from 'next/image';
-
-
 import ProductList from '@/components/ProductList';
 
-
 const Home = () => {
-  // src/app/page.tsx
-
-
-  
-
   return (
     <div className='text-center text-black bg-[#f5f7fa]'>
-      <div>
-        <ul className='flex space-x-6 p-3'>
-          <h4 className=''>CheckOut our latest categories</h4>
-          <li>
+      <div className='py-4'>
+        <h4 className='mb-4 text-xl font-semibold'>Check Out Our Latest Categories</h4>
+        <ul className='flex flex-wrap justify-center gap-6'>
+          <li className='flex flex-col items-center'>
             <Image src='/tv.png' alt='tv' height={50} width={50} />
-            Tvs
+            <span className='mt-2'>TVs</span>
           </li>
-          <li>
+          <li className='flex flex-col items-center'>
             <Image src='/speakers.png' alt='speakers' height={50} width={50} />
-            Speakers
+            <span className='mt-2'>Speakers</span>
           </li>
-          <li>
+          <li className='flex flex-col items-center'>
             <Image src='/headphones.png' alt='headphones' height={50} width={50} />
-            PersonalAudio
+            <span className='mt-2'>Personal Audio</span>
           </li>
         </ul>
       </div>
-       <ProductList />
+      <ProductList />
     </div>
   );
 };
