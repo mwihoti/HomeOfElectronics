@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
+import { useWishlist } from '@/context/WishlistContext';
 
-const Wishlist = ({ wishlist }) => {
-    const wishlistArray = Array.isArray(wishlist) ? wishlist : [];
+const Wishlist = () => {
+  const { wishlist } = useWishlist();
+  const wishlistArray = Array.isArray(wishlist) ? wishlist : [];
+
   return (
-    <div className='mx-auto  text-center'>
+    <div className='mx-auto text-center'>
       <h3>Your wishlist</h3>
       <div className='justify-center m-3'>
         {wishlistArray.length === 0 ? (
@@ -35,7 +38,9 @@ const Wishlist = ({ wishlist }) => {
           </ul>
         )}
       </div>
-      <button className="mt-4 px-4 py-2  border border-gray-4 bg-gray-400 rounded-lg"><Link href='/'>Back</Link></button>
+      <button className="mt-4 px-4 py-2 border border-gray-4 bg-gray-400 rounded-lg">
+        <Link href='/'>Back</Link>
+      </button>
     </div>
   );
 };

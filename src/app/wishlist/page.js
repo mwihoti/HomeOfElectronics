@@ -1,16 +1,10 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import Wishlist from '@/components/Wishlist'
-import withAuth from '@/hoc/withAuth'
-
+import React from 'react';
+import Wishlist from '@/components/Wishlist';
+import { useWishlist } from '@/context/WishlistContext';
 const WishlistPage = () => {
-   
-  return (
-    <div className='h-screen'>
-    
-        <Wishlist />       
-    </div>
-  )
-}
+ 
 
-export default withAuth(WishlistPage)
+  return <Wishlist />;
+};
+
+export default WishlistPage;

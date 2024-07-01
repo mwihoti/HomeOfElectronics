@@ -1,7 +1,9 @@
+'use client'
 import React from 'react';
 import Cart from '@/components/Cart';
 import Navbar from '@/components/Navbar';
 import { CartProvider } from '@/context/CartContext';
+import withAuth from '@/hoc/withAuth';
 
 
 const cartPage = () => {
@@ -14,4 +16,4 @@ const cartPage = () => {
   )
 }
 
-export default cartPage
+export default withAuth(cartPage)

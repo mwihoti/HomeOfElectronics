@@ -1,103 +1,113 @@
 'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 
-
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const { user, logout } = useAuth();
-  const {cart, getTotalItems, getTotalUniqueItems} = useCart();
-  const {wishlist, addToWishlist} = useWishlist();
+  const { cart, getTotalItems, getTotalUniqueItems } = useCart();
+  const { wishlist } = useWishlist();
 
   const handleWishlistClick = () => {
-   
-      router.push('/wishlist');
-      
+    router.push('/wishlist');
   };
-  const handleAddtoCart = () => {
-  
-      router.push('/cart');
-   
-   
-    
-  }
+
+  const handleAddToCart = () => {
+    router.push('/cart');
+  };
 
   const handleLogout = () => {
     logout();
     router.push('/signUp');
   };
 
-
-
   return (
-    <div className='flex p-4 justify-between bg-[#406ca9] text-white'>
-      <div className='flex justify-center space-x-28'>
-        <div className='flex gap-4 items-center'>
+    <nav className="bg-[#406ca9] text-white p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center gap-4">
           <Image src="/logo.jpeg" alt="shop Logo" width={60} height={50} />
-          <h2 className="text-2xl text-black font-bold">HomeOfElctronics</h2>
+          <h2 className="text-2xl text-black font-bold">HomeOfElectronics</h2>
         </div>
-      </div>
 
-      <div className='flex'>
-        <ul className='flex gap-10'>
-          <li>
-            <Link href='/'>Home</Link>
-          </li>
-          <li>
-            <Link href='/product'>Orders</Link>
-          </li>
-          <li>
-            <Link href='/cart'>About us</Link>
-          </li>
-        </ul>
-      </div>
+        <div className="hidden md:flex space-x-10">
+          <Link href="/">Home</Link>
+          <Link href="/product">Orders</Link>
+          <Link href="/about">About Us</Link>
+        </div>
 
-      <div className='flex gap-4'>
-        
-          <button button className='flex items-center gap-1' onClick={handleAddtoCart}>
-          <h4>
-          <Image className='rounded object-fill' src='/cart.gif' alt='cart' width={40} height={30} />
-          <Link href='/cart'>Cart ({getTotalUniqueItems()})</Link>
-        </h4>
-
+        <div className="hidden md:flex items-center gap-4">
+          <button className="flex items-center gap-1" onClick={handleAddToCart}>
+            <Image className="rounded object-fill" src="/cart.gif" alt="cart" width={40} height={30} />
+            <Link href="/cart">Cart ({getTotalUniqueItems()})</Link>
           </button>
-         
-        
-        {user ? (
-          <>
-            <h4>
-              <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
-              {user.username}
-            </h4>
-            <button onClick={handleLogout} className='border rounded-xl p-2 m-3'>Logout</button>
-          </>
-        ) : (
-          <div className='gap-3 flex'>
-            <h4>
-              <Image className='rounded border bg-gray-300 p-1' src='/user.png' alt='user' width={40} height={30} />
-              User
-            </h4>
-            <button className='border rounded-xl p-2 m-3'>
-              <Link href='/signIn'>Sign In</Link>
-            </button>
-            <button className='border rounded-xl p-2 m-3'>
-              <Link href='/signUp'>Login</Link>
-            </button>
-          </div>
-        )}
-        <h4>
-          <button className='flex items-center gap-1' onClick={handleWishlistClick}>
-            <Image className='rounded object-fill' src='/wishlist.png' alt='wishlist' width={40} height={30} />
-            Wishlist ({wishlist?.length ?? 0})
+
+          {user ? (
+            <>
+              <div className="flex items-center gap-2">
+                <Image className="rounded border bg-gray-300 p-1" src="/user.png" alt="user" width={40} height={30} />
+                <span>{user.username}</span>
+              </div>
+              <button onClick={handleLogout} className="border rounded-xl p-2">Logout</button>
+            </>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Link href="/signIn" className="border rounded-xl p-2">Sign In</Link>
+              <Link href="/signUp" className="border rounded-xl p-2">Sign Up</Link>
+            </div>
+          )}
+
+          <button className="flex items-center gap-1" onClick={handleWishlistClick}>
+            <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={40} height={30} />
+            <span>Wishlist ({wishlist?.length ?? 0})</span>
           </button>
-        </h4>
+        </div>
+
+        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}></path>
+          </svg>
+        </button>
       </div>
-    </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden flex flex-col space-y-4 mt-4">
+          <Link href="/">Home</Link>
+          <Link href="/product">Orders</Link>
+          <Link href="/about">About Us</Link>
+
+          <button className="flex items-center gap-1" onClick={handleAddToCart}>
+            <Image className="rounded object-fill" src="/cart.gif" alt="cart" width={40} height={30} />
+            <span>Cart ({getTotalUniqueItems()})</span>
+          </button>
+
+          {user ? (
+            <>
+              <div className="flex items-center gap-2">
+                <Image className="rounded border bg-gray-300 p-1" src="/user.png" alt="user" width={40} height={30} />
+                <span>{user.username}</span>
+              </div>
+              <button onClick={handleLogout} className="border rounded-xl p-2">Logout</button>
+            </>
+          ) : (
+            <div className="flex flex-col space-y-2">
+              <Link href="/signIn" className="border rounded-xl p-2">Sign In</Link>
+              <Link href="/signUp" className="border rounded-xl p-2">Sign Up</Link>
+            </div>
+          )}
+
+          <button className="flex items-center gap-1" onClick={handleWishlistClick}>
+            <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={40} height={30} />
+            <span>Wishlist ({wishlist?.length ?? 0})</span>
+          </button>
+        </div>
+      )}
+    </nav>
   );
 };
 
