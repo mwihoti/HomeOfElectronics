@@ -1,5 +1,5 @@
-import { sources } from "next/dist/compiled/webpack/webpack";
-
+import { type } from "os"
+import {title } from  "process"
 export default {
     name: 'product',
     title: 'Product',
@@ -26,11 +26,7 @@ export default {
             type: 'array',
             of: [{type: 'image'}]
         },
-        {
-            name: 'category',
-            title: 'Category',
-            type: 'string'
-        },
+        
         {
             name: 'price',
             title: 'Price',

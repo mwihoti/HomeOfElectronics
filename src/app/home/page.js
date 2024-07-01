@@ -2,9 +2,13 @@
 import Image from 'next/image';
 
 
-import ProductList from '@/components/Product';
+import ProductList from '@/components/ProductList';
+
 
 const Home = () => {
+  // src/app/page.tsx
+
+
   
 
   return (

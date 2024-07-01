@@ -1,21 +1,34 @@
-import React from 'react'
-import Link from 'next/link';
-import { urlFor } from '@/lib/client';
+// components/Product.js
 
-const Product  = ({product  }) => {
-  const {images =[], name = '', slug = {current: ''}, price=''} = product || {}
+import React from 'react';
+import { urlFor } from '@/lib/client'; // Ensure this path is correct
+
+const Product = ({ product }) => {
+  const { images = [], name = '', slug = { current: '' }, price = '', quantity = 0 } = product || {};
+
+  // Ensure you have a fallback for the image
+  const imageUrl = images.length > 0 ? urlFor(images[0]) : '/default-product-image.jpg';
+
   return (
-    <div>(
-        <Link href={`/product/${slug.current}`} >
-        <div className=''>
-            <img src={urlFor(images && images[0])}  width={250} height={250}/>
-            <p className=''>{name}</p>
-            <p className=''>ksh {price}</p>
+    <div className="product-card">
+      <a href={`/product/${slug.current}`} className="product-link">
+        <div className="product-image">
+          <img
+            src={imageUrl}
+            alt={name}
+            width={250}
+            height={250}
+            className="object-cover"
+          />
         </div>
-        </Link>
+        <div className="product-details">
+          <h2 className="product-name">{name}</h2>
+          <p className="product-price">Ksh {price}</p>
+          <p className="product-quantity">Quantity: {quantity}</p>
+        </div>
+      </a>
+    </div>
+  );
+};
 
-        )</div>
-  )
-}
-
-export default Product
+export default Product;

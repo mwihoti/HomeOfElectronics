@@ -1,47 +1,18 @@
 "use client";
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import WishlistButton from '@/components/WishlistButton';
-import { client } from '@/lib/client';
-const ProductList = ({ products}) => {
-  const router  = useRouter();  
+import Product from './Product'; // Ensure this is the correct path
+
+const ProductList = ({ initialProducts = [] }) => {
+  const router = useRouter();
   const [products, setProducts] = useState(
     initialProducts.map(product => ({
       ...product,
-      currentImage: product.images[0],
-      intervalId: null, })) 
+      currentImage: product.images ? product.images[0] : null,
+      intervalId: null,
+    }))
   );
-  //const [loading, setLoading] = useState(true);
-  //const [error, setError] = useState(null);
-  //const router = useRouter();
-
-  //useEffect(() => {
-    //const fetchProducts = async () => {
-      //try {
-        //const response = await fetch('/api/getProducts', {
-          //headers: {
-            //'Cache-Control': 'no-cache',
-          //},
-        //});
-        //const data = await response.json();
-        //if (response.ok) {
-        //  setProducts(data);
-       // } else {
-       ///   setError(data.message);
-      //  }
-     // } catch (error) {
-     //   setError(error.message);
-    //  } finally {
-   //     setLoading(false);
-    //  }
-   // };
-
-   // fetchProducts();
- // }, []);
-  <div>
-    {products?.map((productItem) => <Product key= {productItem._id} product={productItem} />)}
-  </div>
 
   const handleMouseEnter = (productId) => {
     const productIndex = products.findIndex((product) => product._id === productId);
@@ -78,41 +49,11 @@ const ProductList = ({ products}) => {
     router.push(`/product/${productId}`);
   };
 
-  //const addToWishlist = (productId) => {
-  //  const productToAdd = products.find((product) => product._id === productId);
-   // if (!productToAdd) {
-  //    console.error(`Product with id ${productId} not found`);
-  //    return;
-  //  }
-    
-  //  if (!wishlist) {
-  //    setWishlist([productToAdd]);
-  //    localStorage.setItem('wishlist', JSON.stringify([productToAdd]));
-  //   return;
-  //  }
-    
-   // if (!wishlist.some((item) => item._id === productId)) {
-  //    const newWishlist = [...wishlist, productToAdd];
-   //   setWishlist(newWishlist);
-   //   localStorage.setItem('wishlist', JSON.stringify(newWishlist));
-   // }
-  //};
-  
-
-  if (loading) {
+  if (products.length === 0) {
     return (
       <div className="mx-auto p-4">
         <h3 className="mb-4 items-center">Our collections</h3>
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="mx-auto p-4">
-        <h3 className="mb-4 items-center">Our collections</h3>
-        <p>Error: {error}</p>
+        <p>No products available.</p>
       </div>
     );
   }
@@ -126,16 +67,13 @@ const ProductList = ({ products}) => {
             <li
               key={product._id}
               className="bg-gray-200 border m-2"
-             
+              onMouseEnter={() => handleMouseEnter(product._id)}
+              onMouseLeave={() => handleMouseLeave(product._id)}
+              onClick={() => handleClick(product._id)}
             >
-              <div
-                 onMouseEnter={() => handleMouseEnter(product._id)}
-                 onMouseLeave={() => handleMouseLeave(product._id)}
-                 onClick={() => handleClick(product._id)}
-              >
-                  <div className="w-full p-3">
+              <div className="w-full p-3">
                 <img
-                  src={`data:image/jpeg;base64,${product.currentImage || product.images[0]}`}
+                  src={product.currentImage}
                   loading="lazy"
                   className="object-fill object-center h-40 w-full"
                   alt={product.name}
@@ -152,9 +90,6 @@ const ProductList = ({ products}) => {
                   {product.quantity}
                 </p>
               </div>
-
-              </div>
-            
               <div className="flex">
                 <WishlistButton product={product} />
               </div>
@@ -164,17 +99,6 @@ const ProductList = ({ products}) => {
       </div>
     </div>
   );
-
-
-  }
-
-  export const getServerSideProps = async (  ) => {
-    const query = '*[_type == "product"]'
-    const products = await client.fetch(query);
-
-    return {
-      props: {products}
-    }
-  }
+};
 
 export default ProductList;
