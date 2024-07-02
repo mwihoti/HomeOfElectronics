@@ -24,14 +24,18 @@ export default function RootLayout({ children }) {
 
       </head>
 
-      <body className="min-h-screen" >
+      <body className="min-h-screen flex flex-col w-full" >
         <AuthProvider>
        
         <WishlistProvider >
          <CartProvider>
       <Navbar /> 
+      <main className="flex-grow container mx-auto px-4">
         {children}
-        <Footer  className="absolute bottom-0 m-3"/> 
+x
+      </main>
+        
+        <Footer  className="mt-auto"/> 
         </CartProvider>
      
         

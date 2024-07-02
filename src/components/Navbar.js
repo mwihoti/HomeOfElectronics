@@ -28,7 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[#406ca9] text-white p-4">
+    <nav className="bg-[#406ca9] text-white p-4 w-full">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Image src="/logo.jpeg" alt="shop Logo" width={60} height={50} />

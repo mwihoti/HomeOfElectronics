@@ -47,7 +47,7 @@ const PaymentPage = () => {
             <input
               type="text"
               id="name"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md p-3  border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -58,7 +58,7 @@ const PaymentPage = () => {
             <input
               type="tel"
               id="phone"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full p-3  border border-black rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
@@ -69,16 +69,16 @@ const PaymentPage = () => {
             <input
               type="text"
               id="location"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md p-3  border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Payment Method:</label>
+            <label className="block text-sm font-medium  text-gray-700">Payment Method:</label>
             <select
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md p-3 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
               required

@@ -4,7 +4,7 @@ import ProductList from '@/components/ProductList';
 
 const Home = () => {
   return (
-    <div className='text-center text-black bg-[#f5f7fa]'>
+    <div className='text-center text-black bg-[#f5f7fa] min-h-screen flex flex-col items-center'>
       <div className='py-4'>
         <h4 className='mb-4 text-xl font-semibold'>Check Out Our Latest Categories</h4>
         <ul className='flex flex-wrap justify-center gap-6'>

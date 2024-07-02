@@ -28,12 +28,13 @@ export default function App() {
   
        
       
-          
-            <main className="">
-              <div className="w-full">
+          <div className='flex flex-col min-h-screen '>
+            <main className="flex-grow">
+              <div className="container mx-auto px-4">
                 <Home />
               </div>
             </main>
+            </div>
            
          
         
