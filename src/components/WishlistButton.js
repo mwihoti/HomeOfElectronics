@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useWishlist } from '@/context/WishlistContext';
 
 const WishlistButton = ({ product }) => {
-    const { addToWishlist, wishlist} = useWishlist();
+    const { addToWishlist, wishlists} = useWishlist();
 
     const handleAddtoWishlist = (e) => {
         e.stopPropagation();

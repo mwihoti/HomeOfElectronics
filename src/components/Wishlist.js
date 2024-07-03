@@ -3,8 +3,10 @@ import React from 'react';
 import { useWishlist } from '@/context/WishlistContext';
 
 const Wishlist = () => {
-  const { wishlist } = useWishlist();
-  const wishlistArray = Array.isArray(wishlist) ? wishlist : [];
+  const { wishlists } = useWishlist();
+  console.log("Wishlist component, wishlists:", wishlists);
+
+  const wishlistArray = Array.isArray(wishlists) ? wishlists : [];
 
   return (
     <div className='mx-auto text-center'>
@@ -38,9 +40,9 @@ const Wishlist = () => {
           </ul>
         )}
       </div>
-      <button className="mt-4 px-4 py-2 border border-gray-4 bg-gray-400 rounded-lg">
-        <Link href='/'>Back</Link>
-      </button>
+      <Link href='/' passHref>
+        <button className="mt-4 px-4 py-2 border border-gray-400 bg-gray-400 rounded-lg">Back</button>
+      </Link>
     </div>
   );
 };

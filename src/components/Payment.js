@@ -9,18 +9,34 @@ const PaymentPage = () => {
   const [location, setLocation] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('mpesa');
   const [paymentStatus, setPaymentStatus] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handlePayment = () => {
-    if (paymentMethod === 'mpesa') {
-      setPaymentStatus('Processing M-Pesa payment...');
-    } else {
-      setPaymentStatus('Processing Stripe payment...');
+
+  const handlePayment = async () => {
+    const totalPrice = getTotalPrice();
+    const orderDetails = {
+      name,
+      phone,
+      location,
+      totalPrice,
+      cart
     }
+    if (paymentMethod === 'mpesa') {
+      try {
+        const {data} = await axios.post('api/mpesa/mpesa-payment', orderDetails)
+        window.location.href = data.paymentUrl;
+      } catch (error) {
+        setErrorMessage(error.response ? error.response.data.message : 'M-Pesa payment failed.');
+      }
+    } else{
+       try {
+        const { data} = await axios.post('api/stripe/stripe', orderDetails);
+        window.location.href = data.paymentUrl;
 
-    setTimeout(() => {
-      setPaymentStatus('Payment successful!');
-      clearCart();
-    }, 2000);
+       } catch (error) {
+        setErrorMessage(error.response ? error.response.data.message : 'Stripe payment failed.');
+       }
+    }
   };
 
   const handleSubmit = (e) => {
@@ -95,6 +111,7 @@ const PaymentPage = () => {
           </button>
         </form>
         {paymentStatus && <p className="mt-4 text-center text-green-500">{paymentStatus}</p>}
+        {errorMessage && <p className="mt-4 text-center text-red-500">{errorMessage}</p>}
       </div>
     </div>
   );

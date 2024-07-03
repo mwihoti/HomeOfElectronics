@@ -5,7 +5,6 @@ import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useWishlist } from '@/context/WishlistContext';
 
 const Cart = () => {
   const router = useRouter();

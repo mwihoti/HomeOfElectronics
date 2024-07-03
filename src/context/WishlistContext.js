@@ -1,43 +1,49 @@
-'use client';
-import { createContext, useContext, useState, useEffect } from "react";
+'use client'
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const WishlistContext = createContext();
 
-const useWishlist = () => useContext(WishlistContext);
+export const useWishlist = () => {
+  const context = useContext(WishlistContext);
+  console.log("useWishlist context:", context);
+  if (!context) {
+    throw new Error("useWishlist must be used within a WishlistProvider");
+  }
+  return context;
+};
 
-const WishlistProvider = ({ children }) => {
-    const [wishlist, setWishlist] = useState([]);
+export const WishlistProvider = ({ children }) => {
+  const [wishlists, setWishlists] = useState([]);
 
-    useEffect(() => {
-        const storedWishlist = localStorage.getItem('wishlist');
-        if (storedWishlist) {
-            setWishlist(JSON.parse(storedWishlist));
-        }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    }, [wishlist]);
-
-    const addToWishlist = (product) => {
-        setWishlist((prevWishlist) => {
-            const isInWishlist = prevWishlist.some((item) => item._id === product._id);
-            if (!isInWishlist) {
-                return [...prevWishlist, product];
-            }
-            return prevWishlist;
-        });
+  useEffect(() => {
+    const storedWishlist = localStorage.getItem('wishlists');
+    if (storedWishlist) {
+      setWishlists(JSON.parse(storedWishlist));
     }
+  }, []);
 
-    const removeFromWishlist = (productId) => {
-        setWishlist((prevWishlist) => prevWishlist.filter((item) => item._id !== productId));
-    }
+  useEffect(() => {
+    localStorage.setItem('wishlists', JSON.stringify(wishlists));
+  }, [wishlists]);
 
-    return (
-        <WishlistContext.Provider value={{ addToWishlist, removeFromWishlist, wishlist }}>
-            {children}
-        </WishlistContext.Provider>
-    );
-}
+  const addToWishlist = (product) => {
+    setWishlists((prevWishlist) => {
+      const isInWishlist = prevWishlist.some((item) => item._id === product._id);
+      if (!isInWishlist) {
+        return [...prevWishlist, product];
+      }
+      return prevWishlist;
+    });
+  };
 
-export {WishlistProvider, useWishlist}
+  const removeFromWishlist = (productId) => {
+    setWishlists((prevWishlist) => prevWishlist.filter((item) => item._id !== productId));
+  };
+
+  return (
+    <WishlistContext.Provider value={{ 
+        wishlists, addToWishlist, removeFromWishlist }}>
+      {children}
+    </WishlistContext.Provider>
+  );
+};

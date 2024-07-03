@@ -6,13 +6,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const { user, logout } = useAuth();
   const { cart, getTotalItems, getTotalUniqueItems } = useCart();
-  const { wishlist } = useWishlist();
+  const { wishlists } = useWishlist();
 
   const handleWishlistClick = () => {
     router.push('/wishlist');
@@ -64,7 +63,7 @@ const Navbar = () => {
 
           <button className="flex items-center gap-1" onClick={handleWishlistClick}>
             <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={40} height={30} />
-            <span>Wishlist ({wishlist?.length ?? 0})</span>
+            <span>Wishlist ({wishlists?.length ?? 0})</span>
           </button>
         </div>
 
@@ -103,7 +102,7 @@ const Navbar = () => {
 
           <button className="flex items-center gap-1" onClick={handleWishlistClick}>
             <Image className="rounded object-fill" src="/wishlist.png" alt="wishlist" width={40} height={30} />
-            <span>Wishlist ({wishlist?.length ?? 0})</span>
+            <span>Wishlist ({wishlists?.length ?? 0})</span>
           </button>
         </div>
       )}
