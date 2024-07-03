@@ -1,10 +1,18 @@
+'use client'
 import Link from 'next/link';
-import React from 'react';
-import { useWishlist } from '@/context/WishlistContext';
+import React, { useState, useEffect } from 'react';
 
-const Wishlist = () => {
-  const { wishlists } = useWishlist();
-  console.log("Wishlist component, wishlists:", wishlists);
+const WishList = () => {
+  // Step 2: Initialize local state for wishlists
+  const [wishlists, setWishlists] = useState([]);
+
+  // Step 3: Simulate fetching wishlist data
+  useEffect(() => {
+    // Simulate fetching data (replace with actual data fetching logic)
+    const fetchedWishlists = []; // Fetch or simulate fetch from an API or local source
+    setWishlists(fetchedWishlists);
+    console.log("Wishlist component, wishlists:", fetchedWishlists);
+  }, []); // Empty dependency array means this effect runs once on mount
 
   const wishlistArray = Array.isArray(wishlists) ? wishlists : [];
 
@@ -47,4 +55,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default WishList;

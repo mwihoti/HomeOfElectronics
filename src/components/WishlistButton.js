@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useWishlist } from '@/context/WishlistContext';
 
 const WishlistButton = ({ product }) => {
-    const { addToWishlist, wishlists} = useWishlist();
+   // const { addToWishlist, wishlists} = useWishlist();
+   const [wishlists, setWishlists] = useState([]);
+
+
 
     const handleAddtoWishlist = (e) => {
         e.stopPropagation();
-        addToWishlist(product);
-    }
+        setWishlists(prevWishlists => [...prevWishlists, product]);
+    };
   return (
     <div>
         <button className='p-2 border inset-1 ml-20 m-2 rounded' onClick={

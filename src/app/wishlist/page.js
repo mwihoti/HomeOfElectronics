@@ -1,8 +1,8 @@
 import React from 'react';
-import Wishlist from '@/components/Wishlist';
+import WishList from '@/components/Wishlist';
 
 const WishlistPage = () => {
-  return <Wishlist />;
+  return <WishList />;
 };
 
 export default WishlistPage;

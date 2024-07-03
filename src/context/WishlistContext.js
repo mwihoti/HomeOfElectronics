@@ -3,14 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const WishlistContext = createContext();
 
-export const useWishlist = () => {
-  const context = useContext(WishlistContext);
-  console.log("useWishlist context:", context);
-  if (!context) {
-    throw new Error("useWishlist must be used within a WishlistProvider");
-  }
-  return context;
-};
+export const useWishlist = () => useContext(WishlistContext);
 
 export const WishlistProvider = ({ children }) => {
   const [wishlists, setWishlists] = useState([]);
