@@ -51,10 +51,10 @@ const ProductDetail = () => {
       <h2 className="my-4 text-center">Product selected</h2>
       <div className='grid grid-cols-2 space-x-6'>
         <div className="flex flex-col items-start space-y-4">
-          <Image className="w-full h-auto object-cover rounded-lg" src={product.images[0]} alt={product.name} width={500} height={500} />
+          <Image className="w-full h-auto object-cover rounded-lg" src={product.images[0]} alt={product.name} width={500} height={500} priority />
           <div className="flex space-x-4">
             {product.images.slice(1).map((image, index) => (
-              <Image key={index} className="w-1/5 h-auto object-cover rounded-lg" src={image} alt={`${product.name}-${index}`} width={100} height={100} priority/>
+              <Image key={index} className="w-1/5 h-auto object-cover rounded-lg" src={image} alt={`${product.name}-${index}`} width={300} height={250} priority/>
             ))}
           </div>
           <p className="text-lg"><strong>Description:</strong> {product.description}</p>

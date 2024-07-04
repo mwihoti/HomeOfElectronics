@@ -1,10 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import Footer from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
-import { WishlistProvider } from "@/context/WishlistContext";
+import { WishlistProvider } from "@/context/WishlistContext"; // Import WishlistProvider
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +20,12 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen flex flex-col w-full">
         <AuthProvider>
           <CartProvider>
-            <WishlistProvider>
+            <WishlistProvider> {/* Wrap the application with WishlistProvider */}
               <Navbar />
               <main className="flex-grow container mx-auto px-4">
                 {children}
               </main>
-              <Footer className="mt-auto" />
+              <Footer className="" />
             </WishlistProvider>
           </CartProvider>
         </AuthProvider>
