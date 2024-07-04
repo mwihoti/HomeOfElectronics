@@ -22,20 +22,49 @@
         }
         .section {
             margin-bottom: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
         .section img {
             width: 100%;
-            max-width: 600px;
             height: auto;
             display: block;
-            margin: 0 auto;
         }
         h2 {
             text-align: center;
             color: #343a40;
+            margin: 1rem 0;
         }
         p {
             text-align: center;
+            margin: 1rem 0;
+            color: #555;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .flex-container img {
+            flex: 1;
+            max-width: 100%;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            margin: 0 1rem;
         }
     </style>
 </head>
@@ -53,15 +82,14 @@
 
         <div class="section" id="login">
             <h2>Login</h2>
-             <p>Access your account and manage your preferences.</p>
+            <p>Access your account and manage your preferences.</p>
             <img src="assets/login.png" alt="Login">
-           
         </div>
-        <div class="section" id="login">
-            <h2>SignIn</h2>
-             <p>Register your account and manage your preferences.</p>
-            <img src="assets/sigin.png" alt="Login">
-           
+
+        <div class="section" id="signin">
+            <h2>Sign In</h2>
+            <p>Register your account and manage your preferences.</p>
+            <img src="assets/signin.png" alt="Sign In">
         </div>
 
         <div class="section" id="cart">
@@ -72,27 +100,32 @@
 
         <div class="section" id="product-details">
             <h2>Product Details</h2>
-             <p>Get detailed information about our products.</p>
-            <div id="">
-            <img src="assets/productId.png" alt="Product Details">
+            <p>Get detailed information about our products.</p>
+            <div class="flex-container">
+                <img src="assets/productId.png" alt="Product Details">
                 <img src="assets/cart2.png" alt="Product Details">
             </div>
-           
         </div>
 
         <div class="section" id="payment">
             <h2>Payment</h2>
-             <p>Secure and convenient payment options.</p>
-          <img src="assets/payement.png" alt="Payments">
-           
+            <p>Secure and convenient payment options.</p>
+            <img src="assets/payment.png" alt="Payments">
         </div>
 
         <div class="section" id="invoice">
             <h2>Wishlist Page</h2>
             <p>View and print your wishlists.</p>
-            <img src="assets/wishlist" alt="Invoice">
-            
+            <img src="assets/wishlist.png" alt="Invoice">
         </div>
     </div>
+
+    <footer>
+        <p>
+            <a href="https://github.com/mwihoti/HomeOfElectronics" target="_blank">GitHub Repository</a>
+            |
+            <a href="https://your-username.github.io/homeofelectronics-website/" target="_blank">Deployed Website</a>
+        </p>
+    </footer>
 </body>
 </html>
