@@ -10,9 +10,7 @@ const ProductPage = () => {
   return (
     <div>
 
-        <h1>
-            Add Products
-        </h1>
+       
 
       { <PaymentsPage/>}
 

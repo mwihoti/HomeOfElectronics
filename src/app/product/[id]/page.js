@@ -57,7 +57,7 @@ const ProductDetail = () => {
               <Image key={index} className="w-1/5 h-auto object-cover rounded-lg" src={image} alt={`${product.name}-${index}`} width={300} height={250} priority/>
             ))}
           </div>
-          <p className="text-lg"><strong>Description:</strong> {product.description}</p>
+          <p className="text-lg"><strong>Description:</strong> <br/> {product.description}</p>
         </div>
         <div className="flex flex-col space-y-4">
           <h1 className="text-2xl font-bold">{product.name}</h1>

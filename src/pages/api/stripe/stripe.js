@@ -1,4 +1,4 @@
-import Stripe from 'stripe';
+import Stripe from './stripe';
 import { NextResponse, NextRequest } from 'next/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
