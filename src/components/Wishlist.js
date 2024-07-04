@@ -8,51 +8,37 @@ const WishList = () => {
   console.log('Wishlist items:', wishlists);
 
   return (
-    <div className='mx-auto text-center'>
-      <h3>Your wishlist</h3>
-      <div className='justify-center m-3'>
+    <div className='container mx-auto text-center p-4'>
+      <h3 className='text-2xl font-bold mb-4'>Your Wishlist</h3>
+      <div className='flex justify-center'>
         {wishlists.length === 0 ? (
           <p>Your wishlist is empty.</p>
         ) : (
-          <ul className='p-3 m-2 space-between text-black gap-8 grid grid-cols-2 divide-x'>
+          <ul className='w-full space-y-4'>
             {wishlists.map((product) => (
-              <li key={product._id} className='bg-gray-200 border m-2'>
-                <Link href={`/product/${product._id}`}>
-                
-                <div>
+              <li key={product._id} className='bg-gray-200 border rounded-lg p-4 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4'>
+                <Link href={`/product/${product._id}`} className='w-full md:w-1/3'>
                   <img
                     src={product.currentImage || product.images[0]}
                     loading='lazy'
-                    className='object-fill object-center h-40 w-full'
+                    className='object-cover object-center h-60 w-full rounded-lg'
                     alt={product.name}
                   />
-                </div>
                 </Link>
-                <h4>Product name: {product.name}</h4>
-                <div className='flex gap-10 justify-center m-2'>
-                  <p>
-                    <strong>Price</strong>: {product.price}
-                  </p>
-                  
+                <div className='md:ml-4 flex flex-col justify-between flex-grow text-left'>
+                  <h4 className='text-lg font-semibold mb-2'>{product.name}</h4>
+                  <p className='text-gray-700'><strong>Price:</strong> Ksh {product.price}</p>
+                  <div className='flex gap-4 mt-4'>
+                    <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' onClick={() => removeFromWishlist(product._id)}>Remove</button>
+                  </div>
                 </div>
-                {product.slug && product.slug.current ? (
-                  <Link
-                    href={`/product/${product.slug.current}`}
-                    className='bg-blue-400 p-2 text-white'
-                  >
-                    View Product
-                  </Link>
-                ) : (
-                  <p className='text-red-500'>Slug not available</p>
-                )}
-                <button onClick={() => removeFromWishlist(product._id)}>Remove</button>
               </li>
             ))}
           </ul>
         )}
       </div>
-      <Link href='/' passHref>
-        <button className="mt-4 px-4 py-2 border border-gray-400 bg-gray-400 rounded-lg">Back</button>
+      <Link href='/'>
+        <button className="mt-4 px-4 py-2 border border-gray-400 bg-gray-400 rounded-lg hover:bg-gray-500">Back</button>
       </Link>
     </div>
   );
