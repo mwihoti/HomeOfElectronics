@@ -1,41 +1,65 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
+import 'intasend-inlinejs-sdk';
+import axios from 'axios';
+import Link from 'next/link';
 
 const PaymentPage = () => {
   const { cart, getTotalPrice, clearCart } = useCart();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
+  const [reference, setReference] = useState('HomeOfElectronics'); // Default reference text
   const [paymentMethod, setPaymentMethod] = useState('mpesa');
   const [paymentStatus, setPaymentStatus] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [customAmount, setCustomAmount] = useState('');
 
+  useEffect(() => {
+    setTotalPrice(getTotalPrice());
+  }, [cart]);
+
+  useEffect(() => {
+    new window.IntaSend({
+      publicAPIKey: "ISPubKey_test_8d4987b0-d63a-4a54-a536-02a0032c9f4c",
+      live: false // or true for live environment
+    })
+    .on("COMPLETE", async (response) => { console.log("COMPLETE:", response)
+      localStorage.setItem('paymentData', JSON.stringify(response));
+      await axios.post('/api/store-payment', response);
+      window.location.href= '/';
+     })
+    .on("FAILED", (response) => { console.log("FAILED", response) })
+    .on("IN-PROGRESS", () => { console.log("INPROGRESS ...") });
+  }, []);
 
   const handlePayment = async () => {
-    const totalPrice = getTotalPrice();
+    const amountToPay = customAmount ? parseFloat(customAmount) : totalPrice;
     const orderDetails = {
       name,
       phone,
       location,
-      totalPrice,
+      totalPrice: amountToPay,
+      reference,
       cart
-    }
+    };
+
     if (paymentMethod === 'mpesa') {
       try {
-        const {data} = await axios.post('api/mpesa/mpesa-payment', orderDetails)
+        const { data } = await axios.post('api/mpesa/mpesa-payment', orderDetails);
         window.location.href = data.paymentUrl;
       } catch (error) {
         setErrorMessage(error.response ? error.response.data.message : 'M-Pesa payment failed.');
       }
-    } else{
-       try {
-        const { data} = await axios.post('api/stripe/stripe', orderDetails);
+    } else {
+      try {
+        const { data } = await axios.post('api/stripe/stripe', orderDetails);
         window.location.href = data.paymentUrl;
-
-       } catch (error) {
+      } catch (error) {
         setErrorMessage(error.response ? error.response.data.message : 'Stripe payment failed.');
-       }
+      }
     }
   };
 
@@ -56,14 +80,14 @@ const PaymentPage = () => {
             </li>
           ))}
         </ul>
-        <p className="text-lg font-semibold mb-4">Total: Ksh {getTotalPrice()}</p>
+        <p className="text-lg font-semibold mb-4">Total: Ksh {totalPrice}</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
             <input
               type="text"
               id="name"
-              className="mt-1 block w-full rounded-md p-3  border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md p-3 border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -74,7 +98,7 @@ const PaymentPage = () => {
             <input
               type="tel"
               id="phone"
-              className="mt-1 block w-full p-3  border border-black rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full p-3 border border-black rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
@@ -85,30 +109,49 @@ const PaymentPage = () => {
             <input
               type="text"
               id="location"
-              className="mt-1 block w-full rounded-md p-3  border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md p-3 border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium  text-gray-700">Payment Method:</label>
-            <select
-              className="mt-1 block w-full rounded-md p-3 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              required
-            >
-              <option value="mpesa">M-Pesa</option>
-              <option value="stripe">Stripe</option>
-            </select>
+            <label htmlFor="reference" className="block text-sm font-medium text-gray-700">Reference:</label>
+            <input
+              type="text"
+              id="reference"
+              className="mt-1 block w-full rounded-md p-3 border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
+              placeholder="e.g., HomeOfElectronics"
+            />
+          </div>
+          <div>
+            <label htmlFor="customAmount" className="block text-sm font-medium text-gray-700">Custom Amount:</label>
+            <input
+              type="number"
+              id="customAmount"
+              className="mt-1 block w-full rounded-md p-3 border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              value={customAmount}
+              onChange={(e) => setCustomAmount(e.target.value)}
+              placeholder="Enter amount to pay"
+            />
           </div>
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="intaSendPayButton w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            data-currency="KES"
+            data-amount={(customAmount ? parseFloat(customAmount) : totalPrice) } // IntaSend expects the amount in cents
+            data-phone={phone} // Use the phone number entered by the user
+            data-reference={reference} // Use the reference entered by the user
           >
-            Proceed to Payment
+            Pay Now
           </button>
+          <Link href="/orders">
+          <button>
+          View my Payments
+          </button>
+          </Link>
         </form>
         {paymentStatus && <p className="mt-4 text-center text-green-500">{paymentStatus}</p>}
         {errorMessage && <p className="mt-4 text-center text-red-500">{errorMessage}</p>}

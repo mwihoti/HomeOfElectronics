@@ -1,7 +1,7 @@
 'use client'
 import React, {useState, useEffect} from 'react'
 import ProductForm from '@/components/ProductForm'
-
+import PaymentsPage from '../orders/page'
 
 
 const ProductPage = () => {
@@ -14,7 +14,7 @@ const ProductPage = () => {
             Add Products
         </h1>
 
-      { <ProductForm/>}
+      { <PaymentsPage/>}
 
       
 

@@ -31,13 +31,17 @@ const Cart = () => {
         {cart.map((item) => (
           <li key={item._id} className="flex justify-between items-center border p-2 rounded">
             <div className='flex items-center'>
+            <Link  href={`/product/${item._id}`}>
               {item.images && item.images.length > 0 ? (
-                <Image src={item.images[0]} alt={item.name} width={60} height={50}     loading="eager"  priority/>
+                
+                <Image src={item.images[0]} alt={item.name} width={200} height={100}     loading="eager"  priority/>
               ) : (
                 <div className="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-600">
                   No Image
                 </div>
+                
               )}
+              </Link>
               <div className='ml-3'>
                 <h3 className="text-lg font-semibold">{item.name}</h3>
                 <input 

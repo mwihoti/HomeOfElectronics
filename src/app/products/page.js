@@ -12,8 +12,8 @@ const getServerSideProps = async () => {
 
     }
   }
-  const ProductsPage = ({ initialProducts }) => {
-    return <ProductList initialProducts={products} />;
+  const ProductsPage = () => {
+    return <ProductList  />;
   };
 
 export default ProductsPage;

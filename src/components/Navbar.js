@@ -78,7 +78,7 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden flex flex-col space-y-4 mt-4">
           <Link href="/">Home</Link>
-          <Link href="/product">Orders</Link>
+          <Link href="/orders">Orders</Link>
           <Link href="/about">About Us</Link>
 
           <button className="flex items-center gap-1" onClick={handleAddToCart}>
