@@ -34,6 +34,10 @@ const PaymentPage = () => {
     .on("FAILED", (response) => { console.log("FAILED", response) })
     .on("IN-PROGRESS", () => { console.log("INPROGRESS ...") });
   }, []);
+  
+
+
+ 
 
   const handlePayment = async () => {
     const amountToPay = customAmount ? parseFloat(customAmount) : totalPrice;
@@ -45,28 +49,12 @@ const PaymentPage = () => {
       reference,
       cart
     };
-
-    if (paymentMethod === 'mpesa') {
-      try {
-        const { data } = await axios.post('api/mpesa/mpesa-payment', orderDetails);
-        window.location.href = data.paymentUrl;
-      } catch (error) {
-        setErrorMessage(error.response ? error.response.data.message : 'M-Pesa payment failed.');
-      }
-    } else {
-      try {
-        const { data } = await axios.post('api/stripe/stripe', orderDetails);
-        window.location.href = data.paymentUrl;
-      } catch (error) {
-        setErrorMessage(error.response ? error.response.data.message : 'Stripe payment failed.');
-      }
-    }
-  };
-
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     handlePayment();
   };
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -159,5 +147,6 @@ const PaymentPage = () => {
     </div>
   );
 };
+
 
 export default PaymentPage;

@@ -1,17 +1,23 @@
+
 import { useState, useEffect } from 'react';
 
 const useLocalStorageWishlist = () => {
   const [wishlists, setWishlists] = useState(() => {
+    if (typeof window !== 'undefined') {
     const storedWishlist = localStorage.getItem('wishlists');
     console.log('Initializing wishlist from localStorage:', storedWishlist);
     return storedWishlist ? JSON.parse(storedWishlist) : [];
+    }
+    return [];
   });
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     console.log('Storing wishlist to localStorage:', wishlists);
     localStorage.setItem('wishlists', JSON.stringify(wishlists));
     const event = new Event('wishlistUpdated');
     window.dispatchEvent(event);
+    }
   }, [wishlists]);
 
   const addToWishlist = (product) => {

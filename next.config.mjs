@@ -3,7 +3,9 @@ const nextConfig = {
     reactStrictMode: true,
     images: {
       domains: ['cdn.sanity.io'],
-    },
+    },"compilerOptions": {
+    "checkJs": false
+  },
    
   };
   

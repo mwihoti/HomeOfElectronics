@@ -49,7 +49,7 @@ const ProductDetail = () => {
   return (
     <div className="container mx-auto">
       <h2 className="my-4 text-center">Product selected</h2>
-      <div className='grid grid-cols-2 space-x-6'>
+      <div className='grid grid-cols-2 gap-10 space-x-6'>
         <div className="flex flex-col items-start space-y-4">
           <Image className="w-full h-auto object-cover rounded-lg" src={product.images[0]} alt={product.name} width={500} height={500} priority />
           <div className="flex space-x-4">
