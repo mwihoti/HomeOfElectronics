@@ -22,17 +22,22 @@ const PaymentPage = () => {
   }, [cart]);
 
   useEffect(() => {
-    new window.IntaSend({
+   const instasend = new window.IntaSend({
       publicAPIKey: "ISPubKey_test_8d4987b0-d63a-4a54-a536-02a0032c9f4c",
       live: false // or true for live environment
     })
+    instasend
     .on("COMPLETE", async (response) => { console.log("COMPLETE:", response)
       localStorage.setItem('paymentData', JSON.stringify(response));
       await axios.post('/api/store-payment', response);
       window.location.href= '/';
      })
-    .on("FAILED", (response) => { console.log("FAILED", response) })
+    .on("FAILED", (response) => { console.log("FAILED", response);
+      setErrorMessage('Payment failed please try again')
+     })
     .on("IN-PROGRESS", () => { console.log("INPROGRESS ...") });
+
+    window.instasend =instasend;
   }, []);
   
 
@@ -49,6 +54,15 @@ const PaymentPage = () => {
       reference,
       cart
     };
+    window.intasend.initialize({
+      amount: amountToPay, // Convert to cents
+      currency: "KES",
+      email: "customer@example.com", // Optionally add customer email
+      first_name: name.split(' ')[0],
+      last_name: name.split(' ').slice(1).join(' '),
+      phone_number: phone,
+      description: reference,
+    });
   }
   const handleSubmit = (e) => {
     e.preventDefault();
