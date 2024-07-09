@@ -8,6 +8,7 @@ GitHub: https://github.com/mwihoti/HomeOfElectronics/
 Deployed Project: https://homeofelectronics.vercel.app/
 
 Project Landing Page: https://mwihoti.me/HomeOfElectronics/
+
 LinkedIn: https://www.linkedin.com/posts/daniel-mwihoti-3aaa652b9_a-comprehensive-platform-for-electronic-gadgets-activity-7216344262509043712--RgA?utm_source=share&utm_medium=member_desktop
 
 ## Getting Started
