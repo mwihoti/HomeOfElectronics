@@ -2,14 +2,14 @@
 
 HomeOfElectronics was born from the idea of having an online purchasing platform for buying electronic gadgets from your favorite electronic shop. Customers can check the latest products in the shop and can also make payments and pick items from the shop.
 
-```
+
 GitHub: https://github.com/mwihoti/HomeOfElectronics/
 
 Deployed Project: https://homeofelectronics.vercel.app/
 
 Project Landing Page: https://mwihoti.me/HomeOfElectronics/
 LinkedIn: https://www.linkedin.com/posts/daniel-mwihoti-3aaa652b9_a-comprehensive-platform-for-electronic-gadgets-activity-7216344262509043712--RgA?utm_source=share&utm_medium=member_desktop
-```
+
 ## Getting Started
 Prerequisites
 Make sure you have the following installed on your development machine:
