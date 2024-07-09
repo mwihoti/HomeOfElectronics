@@ -13,8 +13,9 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [numItems, setNumItems] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // State to track the displayed image
   const { addToCart } = useCart();
-  
+
   useEffect(() => {
     if (!id) return;
 
@@ -51,10 +52,26 @@ const ProductDetail = () => {
       <h2 className="my-4 text-center">Product selected</h2>
       <div className='grid grid-cols-2 gap-10 space-x-6'>
         <div className="flex flex-col items-start space-y-4">
-          <Image className="w-full h-auto object-cover rounded-lg" src={product.images[0]} alt={product.name} width={500} height={500} priority />
-          <div className="flex space-x-4">
-            {product.images.slice(1).map((image, index) => (
-              <Image key={index} className="w-1/5 h-auto object-cover rounded-lg" src={image} alt={`${product.name}-${index}`} width={300} height={250} priority/>
+          <Image 
+            className="w-full h-auto object-cover rounded-lg" 
+            src={product.images[currentImageIndex]} 
+            alt={product.name} 
+            width={500} 
+            height={300} 
+            priority 
+          />
+          <div className="flex space-x-8">
+            {product.images.map((image, index) => (
+              <Image 
+                key={index} 
+                className="w-1/5 h-auto object-cover rounded-lg cursor-pointer" 
+                src={image} 
+                alt={`${product.name}-${index}`} 
+                width={300} 
+                height={250} 
+                priority 
+                onClick={() => setCurrentImageIndex(index)} // Update the current image when clicked
+              />
             ))}
           </div>
           <p className="text-lg"><strong>Description:</strong> <br/> {product.description}</p>
@@ -66,9 +83,23 @@ const ProductDetail = () => {
           <div className='items-center p-1'>
             Select of items:
             <div className='flex'>
-              <Image src="/subtract.png" alt="minus" className='border m-2' width={20} height={20} onClick={() => setNumItems(numItems - 1)} />
+              <Image 
+                src="/subtract.png" 
+                alt="minus" 
+                className='border m-2' 
+                width={20} 
+                height={20} 
+                onClick={() => setNumItems(numItems - 1)} 
+              />
               <p className="m-2">{numItems}</p>
-              <Image src="/add.png" alt="addition" width={20} height={20} className='border m-2' onClick={() => setNumItems(numItems + 1)} />
+              <Image 
+                src="/add.png" 
+                alt="addition" 
+                width={20} 
+                height={20} 
+                className='border m-2' 
+                onClick={() => setNumItems(numItems + 1)} 
+              />
             </div>
           </div>
           <div className='flex gap-4'>

@@ -1,74 +1,74 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { useCart } from '@/context/CartContext';
-import 'intasend-inlinejs-sdk';
 import axios from 'axios';
 import Link from 'next/link';
+import 'intasend-inlinejs-sdk';
 
 const PaymentPage = () => {
-  const { cart, getTotalPrice, clearCart } = useCart();
+  const { cart, getTotalPrice } = useCart();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [location, setLocation] = useState('');
   const [reference, setReference] = useState('HomeOfElectronics'); // Default reference text
-  const [paymentMethod, setPaymentMethod] = useState('mpesa');
   const [paymentStatus, setPaymentStatus] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const [customAmount, setCustomAmount] = useState('');
+  const [showPaymentScreen, setShowPaymentScreen] = useState(false);
+  const [paymentData, setPaymentData] = useState(null);
 
   useEffect(() => {
     setTotalPrice(getTotalPrice());
-  }, [cart]);
+  }, [cart, getTotalPrice]);
+
+  const onComplete = useCallback(async (response) => {
+    setPaymentStatus('Payment complete');
+    localStorage.setItem('paymentData', JSON.stringify(response));
+    await axios.post('/api/store-payment', response);
+    window.location.href = '/';
+  }, []);
+
+  const onFailed = useCallback((response) => {
+    setErrorMessage('Payment failed. Please try again.');
+  }, []);
+
+  const onInProgress = useCallback(() => {
+    setPaymentStatus('Payment in progress...');
+  }, []);
 
   useEffect(() => {
-   const instasend = new window.IntaSend({
-      publicAPIKey: "ISPubKey_test_8d4987b0-d63a-4a54-a536-02a0032c9f4c",
-      live: false // or true for live environment
-    })
-    instasend
-    .on("COMPLETE", async (response) => { console.log("COMPLETE:", response)
-      localStorage.setItem('paymentData', JSON.stringify(response));
-      await axios.post('/api/store-payment', response);
-      window.location.href= '/';
-     })
-    .on("FAILED", (response) => { console.log("FAILED", response);
-      setErrorMessage('Payment failed please try again')
-     })
-    .on("IN-PROGRESS", () => { console.log("INPROGRESS ...") });
+    if (typeof window !== 'undefined' && window.IntaSend) {
+      const intasend = new window.IntaSend({
+        publicAPIKey: "ISPubKey_test_8d4987b0-d63a-4a54-a536-02a0032c9f4c",
+        live: false // Set to true for live environment
+      });
 
-    window.instasend =instasend;
-  }, []);
-  
+      intasend
+        .on("COMPLETE", onComplete)
+        .on("FAILED", onFailed)
+        .on("IN-PROGRESS", onInProgress);
 
+      ({
+        amount: customAmount ? parseFloat(customAmount) : totalPrice,
+        currency: "KES",
+        phone_number: phone,
+        reference,
+      });
 
- 
+     
+    }
+  }, [customAmount, totalPrice, phone, reference, onComplete, onFailed, onInProgress]);
 
-  const handlePayment = async () => {
-    const amountToPay = customAmount ? parseFloat(customAmount) : totalPrice;
-    const orderDetails = {
-      name,
-      phone,
-      location,
-      totalPrice: amountToPay,
-      reference,
-      cart
-    };
-    window.intasend.initialize({
-      amount: amountToPay, // Convert to cents
-      currency: "KES",
-      email: "customer@example.com", // Optionally add customer email
-      first_name: name.split(' ')[0],
-      last_name: name.split(' ').slice(1).join(' '),
-      phone_number: phone,
-      description: reference,
-    });
-  }
+  const handlePayment = () => {
+    setShowPaymentScreen(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handlePayment();
   };
-
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -142,17 +142,11 @@ const PaymentPage = () => {
           <button
             type="submit"
             className="intaSendPayButton w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            data-currency="KES"
-            data-amount={(customAmount ? parseFloat(customAmount) : totalPrice) } // IntaSend expects the amount in cents
-            data-phone={phone} // Use the phone number entered by the user
-            data-reference={reference} // Use the reference entered by the user
           >
             Pay Now
           </button>
           <Link href="/orders">
-          <button>
-          View my Payments
-          </button>
+            <h3 className="mt-4 block text-center text-indigo-600 hover:underline">View my Payments</h3>
           </Link>
         </form>
         {paymentStatus && <p className="mt-4 text-center text-green-500">{paymentStatus}</p>}
@@ -161,6 +155,5 @@ const PaymentPage = () => {
     </div>
   );
 };
-
 
 export default PaymentPage;

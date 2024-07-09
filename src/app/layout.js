@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head></head>
-      <body className="min-h-screen flex flex-col w-full">
+      <body className="min-h-screen flex flex-col ">
         <AuthProvider>
           <CartProvider>
             <WishlistProvider> {/* Wrap the application with WishlistProvider */}
