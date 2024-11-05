@@ -5,7 +5,7 @@ HomeOfElectronics was born from the idea of having an online purchasing platform
 
 GitHub: https://github.com/mwihoti/HomeOfElectronics/
 
-Deployed Project:< https://homeofelectronics.vercel.app/>
+Deployed Project:
 
 Project Landing Page: https://mwihoti.me/HomeOfElectronics/
 
