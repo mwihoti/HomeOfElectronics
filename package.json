@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@material-tailwind/react": "^2.1.10",
     "@sanity/client": "^6.20.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.48.1",
@@ -33,7 +34,9 @@
     "next-sanity-image": "^6.1.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-slick": "^0.31.0",
     "sanity": "^3.48.1",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.11"
   },
   "devDependencies": {

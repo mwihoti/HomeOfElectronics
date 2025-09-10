@@ -1,10 +1,15 @@
 'use client';
 import Image from 'next/image';
 import ProductList from '@/components/ProductList';
+import PromoCarousel from '@/components/PromoCarousel';
 
 const Home = () => {
   return (
     <div className='text-center text-black bg-[#f5f7fa] min-h-screen flex flex-col items-center'>
+      {/* Carousel Section */}
+      <PromoCarousel />
+
+      {/* Categories */}
       <div className='py-4'>
         <h4 className='mb-4 text-xl font-semibold'>Check Out Our Latest Categories</h4>
         <ul className='flex flex-wrap justify-center gap-6'>
@@ -22,6 +27,9 @@ const Home = () => {
           </li>
         </ul>
       </div>
+
+      {/* Products */}
+      <h3 className='mt-6 text-lg font-bold'>Get Best Deals on Electronics</h3>
       <ProductList />
     </div>
   );

@@ -37,6 +37,17 @@ export default {
             title: 'Description',
             type: 'text'
         },
+        {
+            name: 'discount',
+            title: 'discount',
+            type: 'number'
+        },
+        {
+            name: 'originalPrice',
+            title: 'originalPrice',
+            type:  'number'
+        },
+        
     
      
     ]

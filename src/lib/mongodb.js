@@ -13,10 +13,20 @@ const connectToDatabase = async () => {
     return mongoose.connection;
   }
 
-  await mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  if (!mongoURI) {
+    throw new Error('MONGODB_URI environment variable is not defined');
+  }
+
+  console.log('Attempting to connect to MongoDB...');
+  console.log('MongoDB URI (partial):', mongoURI.substring(0, 20) + '...');
+
+  try {
+    await mongoose.connect(mongoURI);
+    console.log('Connected to MongoDB successfully');
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+    throw error;
+  }
 
   mongoose.connection.once('open', () => {
     gfs = Grid(mongoose.connection.db, mongoose.mongo);
