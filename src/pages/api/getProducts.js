@@ -31,6 +31,7 @@ apiRoute.get(async (req, res) => {
       price,
       quantity,
       "images": images[].asset->url,
+      description,
       originalPrice
     }`;
     const products = await client.fetch(query);

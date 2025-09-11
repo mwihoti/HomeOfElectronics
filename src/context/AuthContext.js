@@ -9,7 +9,7 @@ const decodeToken = (token) => {
   try {
     return jwtDecode(token);
   } catch (error) {
-    console.error('Invalid token', error);
+    console.error('In valid token', error);
     return null;
   }
 };
@@ -23,17 +23,26 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       const decodedUser = decodeToken(token);
       if (decodedUser) {
-        setUser(decodedUser);
-      } else {
+        // check if token is expired
+        const currentTime = Date.now() / 1000;
+        if (decodedUser.exp < currentTime) {
+          cookies.remove('token');
+          setUser(null)
+        } else { 
+            setUser(decodedUser);
+}      } else {
         cookies.remove('token');
       }
     }
     setLoading(false);
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
-    cookies.set('token', userData.token, { expires: 30 });
+  const login = (token) => {
+    const decodedUser = decodeToken(token);
+    if (decodedUser) {
+    setUser(decodedUser);
+    cookies.set('token', token, { expires: 30 });
+    }
   };
 
   const logout = () => {

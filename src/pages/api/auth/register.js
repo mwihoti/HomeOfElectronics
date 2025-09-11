@@ -32,14 +32,13 @@ handler.post(async (req, res) => {
             username,
             email,
             password,
-            password2
         });
 
         if (user) {
             // Create a token for the user
-          //  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-          //      expiresIn: '30d',
-       //     });
+              const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+                expiresIn: '30d',
+           });
 
             // Return the user data and token
             return res.status(201).json({
@@ -48,6 +47,7 @@ handler.post(async (req, res) => {
                 firstname: user.firstname,
                 lastname: user.lastname,
                 email: user.email,
+                token
             
             });
         } else {

@@ -24,11 +24,12 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error('MongoDB connection test failed:', error);
-    return res.status(500).json({ 
-      message: 'MongoDB connection failed',
-      error: error.message,
-      code: error.code,
-      hostname: error.hostname
-    });
+    const payload = { message: 'MongoDB connection failed' };
+    if (process.env.NODE_ENV !== 'production') {
+      payload.error = error?.message;
+      payload.code = error?.code;
+      payload.hostname = error?.hostname;
+    }
+    return res.status(500).json(payload);
   }
 }

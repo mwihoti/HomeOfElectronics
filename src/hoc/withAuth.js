@@ -4,16 +4,16 @@ import { useAuth } from "@/context/AuthContext";
 
 const withAuth = (WrappedComponents) => {
     return (props) => {
-        const {user} = useAuth();
+        const {user, loading} = useAuth();
         const router = useRouter();
 
 
         useEffect(() => {
-            if (!user) {
+            if (!user && !loading) {
                 router.push('/signUp')
             }
-        }, [user, router]);
-        return <WrappedComponents {...props} />
+        }, [user, loading, router]);
+        return user ? <WrappedComponents {...props} /> : null
 
     }
 }

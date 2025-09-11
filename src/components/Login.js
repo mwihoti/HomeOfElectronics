@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import cookies from 'js-cookie'
+import { useAuth } from '@/context/AuthContext';
 
 const LoginPage = () => {
     const router = useRouter(); // Correctly call useRouter
@@ -12,6 +13,7 @@ const LoginPage = () => {
         username: '',
         password: '',
     })
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         setData({
@@ -38,7 +40,8 @@ const LoginPage = () => {
 
         if (response.ok) {
             console.log('Login Successful', result)
-            cookies.set('token', result.token, { expires: 30 })
+            login(result.token)
+            //cookies.set('token', result.token, { expires: 30 })
             router.push('/') // Navigate to the home page after successful login
         } else {
             console.error('Login failed:', result);

@@ -1,48 +1,54 @@
-'use client';
-import React, { useState, useEffect, useCallback } from 'react';
-import dynamic from 'next/dynamic';
-import { useCart } from '@/context/CartContext';
-import axios from 'axios';
-import Link from 'next/link';
-import 'intasend-inlinejs-sdk';
+"use client";
+import React, { useState, useEffect, useCallback } from "react";
+import { useCart } from "@/context/CartContext";
+import axios from "axios";
+import Link from "next/link";
+import "intasend-inlinejs-sdk";
 
 const PaymentPage = () => {
   const { cart, getTotalPrice } = useCart();
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [location, setLocation] = useState('');
-  const [reference, setReference] = useState('HomeOfElectronics'); // Default reference text
-  const [paymentStatus, setPaymentStatus] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [location, setLocation] = useState("");
+  const [address, setAddress] = useState("");
+  const [reference, setReference] = useState("HomeOfElectronics");
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [customAmount, setCustomAmount] = useState('');
+  const [customAmount, setCustomAmount] = useState("");
   const [showPaymentScreen, setShowPaymentScreen] = useState(false);
   const [paymentData, setPaymentData] = useState(null);
 
   useEffect(() => {
     setTotalPrice(getTotalPrice());
-  }, [cart, getTotalPrice]);
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      const cartData = JSON.parse(savedCart);
+      // Update cart context if needed
+    }
+  }, [getTotalPrice]);
 
   const onComplete = useCallback(async (response) => {
-    setPaymentStatus('Payment complete');
-    localStorage.setItem('paymentData', JSON.stringify(response));
-    await axios.post('/api/store-payment', response);
-    window.location.href = '/';
+    setPaymentStatus("Payment complete");
+    localStorage.setItem("paymentData", JSON.stringify(response));
+    await axios.post("/api/store-payment", response);
+    localStorage.removeItem("cart");
+    window.location.href = "/";
   }, []);
 
   const onFailed = useCallback((response) => {
-    setErrorMessage('Payment failed. Please try again.');
+    setErrorMessage("Payment failed. Please try again.");
   }, []);
 
   const onInProgress = useCallback(() => {
-    setPaymentStatus('Payment in progress...');
+    setPaymentStatus("Payment in progress...");
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.IntaSend) {
+    if (typeof window !== "undefined" && window.IntaSend) {
       const intasend = new window.IntaSend({
         publicAPIKey: "ISPubKey_test_8d4987b0-d63a-4a54-a536-02a0032c9f4c",
-        live: false // Set to true for live environment
+        live: false,
       });
 
       intasend
@@ -50,19 +56,31 @@ const PaymentPage = () => {
         .on("FAILED", onFailed)
         .on("IN-PROGRESS", onInProgress);
 
-      ({
+      // Initialize payment configuration
+      const paymentConfig = {
         amount: customAmount ? parseFloat(customAmount) : totalPrice,
         currency: "KES",
         phone_number: phone,
         reference,
-      });
+        paymentMethods: ["card", "mpesa"], // Support for M-Pesa and card
+        first_name: name,
+        email: "", // Add email if available
+        description: "Purchase from HomeOfElectronics",
+      };
 
-     
+      // Trigger payment when handlePayment is called
+      window.handlePayment = () => {
+        intasend.payment(paymentConfig);
+      };
     }
-  }, [customAmount, totalPrice, phone, reference, onComplete, onFailed, onInProgress]);
+  }, [customAmount, totalPrice, phone, reference, name, onComplete, onFailed, onInProgress]);
 
   const handlePayment = () => {
-    setShowPaymentScreen(true);
+    if (window.handlePayment) {
+      window.handlePayment();
+    } else {
+      setErrorMessage("Payment initialization failed. Please try again.");
+    }
   };
 
   const handleSubmit = (e) => {
@@ -82,10 +100,12 @@ const PaymentPage = () => {
             </li>
           ))}
         </ul>
-        <p className="text-lg font-semibold mb-4">Total: Ksh {totalPrice}</p>
+        <p className="text-lg font-semibold mb-4">Total: Ksh {totalPrice || 0}</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              Name:
+            </label>
             <input
               type="text"
               id="name"
@@ -96,7 +116,9 @@ const PaymentPage = () => {
             />
           </div>
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number:</label>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              Phone Number:
+            </label>
             <input
               type="tel"
               id="phone"
@@ -107,7 +129,9 @@ const PaymentPage = () => {
             />
           </div>
           <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location:</label>
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+              Location:
+            </label>
             <input
               type="text"
               id="location"
@@ -118,7 +142,22 @@ const PaymentPage = () => {
             />
           </div>
           <div>
-            <label htmlFor="reference" className="block text-sm font-medium text-gray-700">Reference:</label>
+            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+              Address:
+            </label>
+            <input
+              type="text"
+              id="address"
+              className="mt-1 block w-full rounded-md p-3 border border-black shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="reference" className="block text-sm font-medium text-gray-700">
+              Reference:
+            </label>
             <input
               type="text"
               id="reference"
@@ -129,7 +168,9 @@ const PaymentPage = () => {
             />
           </div>
           <div>
-            <label htmlFor="customAmount" className="block text-sm font-medium text-gray-700">Custom Amount:</label>
+            <label htmlFor="customAmount" className="block text-sm font-medium text-gray-700">
+              Custom Amount:
+            </label>
             <input
               type="number"
               id="customAmount"
@@ -146,7 +187,9 @@ const PaymentPage = () => {
             Pay Now
           </button>
           <Link href="/orders">
-            <h3 className="mt-4 block text-center text-indigo-600 hover:underline">View my Payments</h3>
+            <h3 className="mt-4 block text-center text-indigo-600 hover:underline">
+              View my Payments
+            </h3>
           </Link>
         </form>
         {paymentStatus && <p className="mt-4 text-center text-green-500">{paymentStatus}</p>}
