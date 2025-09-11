@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-10">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-gray-900 mx-auto w-full text-white py-10">
+      <div className="container mx-auto px-6 grid grid-cols-3 space-y-8 md:grid-cols-4 gap-12">
         {/* Logo and Store Info */}
         <div className="flex flex-col items-center md:items-start">
           <Image src="/logo.jpeg" alt="Shop Logo" width={80} height={80} className="rounded-full mb-4" />
@@ -15,7 +15,8 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
+   {/* Quick Links */}
+   {/*   
         <div>
           <h4 className="text-lg font-semibold mb-4 text-yellow-300">Quick Links</h4>
           <ul className="space-y-2">
@@ -24,7 +25,9 @@ const Footer = () => {
             <li><Link href="/about" className="text-gray-400 hover:text-yellow-300 transition duration-300">About Us</Link></li>
             <li><Link href="/contact" className="text-gray-400 hover:text-yellow-300 transition duration-300">Contact</Link></li>
           </ul>
-        </div>
+        </div> 
+        */}
+
 
         {/* Contact Info */}
         <div>
@@ -32,7 +35,7 @@ const Footer = () => {
           <ul className="space-y-2">
             <li className="text-gray-400">Phone: 0723 559 412</li>
             <li className="text-gray-400">Phone: 0769 836 03</li>
-            <li className="text-gray-400">Email: danielmwihoti@gmail.com</li>
+{    /*        <li className="text-gray-400">Email: danielmwihoti@gmail.com</li>*/}
             <li className="text-gray-400">Location: Nairobi, Luthuli St, Skyworth Bldg, 3rd Fl, Stall 10</li>
           </ul>
         </div>
