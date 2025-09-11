@@ -1,9 +1,14 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { useCart } from "@/context/CartContext";
 import axios from "axios";
 import Link from "next/link";
-import "intasend-inlinejs-sdk";
+
+// Dynamically import IntaSend to avoid server-side execution
+const IntaSendDynamic = dynamic(() => import("intasend-inlinejs-sdk"), {
+  ssr: false, // Disable server-side rendering for this component
+});
 
 const PaymentPage = () => {
   const { cart, getTotalPrice } = useCart();
@@ -45,8 +50,8 @@ const PaymentPage = () => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.IntaSend) {
-      const intasend = new window.IntaSend({
+    if (typeof window !== "undefined" && IntaSendDynamic) {
+      const intasend = new IntaSendDynamic({
         publicAPIKey: "ISPubKey_test_8d4987b0-d63a-4a54-a536-02a0032c9f4c",
         live: false,
       });
@@ -56,20 +61,16 @@ const PaymentPage = () => {
         .on("FAILED", onFailed)
         .on("IN-PROGRESS", onInProgress);
 
-      // Initialize payment configuration
-      const paymentConfig = {
-        amount: customAmount ? parseFloat(customAmount) : totalPrice,
-        currency: "KES",
-        phone_number: phone,
-        reference,
-        paymentMethods: ["card", "mpesa"], // Support for M-Pesa and card
-        first_name: name,
-        email: "", // Add email if available
-        description: "Purchase from HomeOfElectronics",
-      };
-
-      // Trigger payment when handlePayment is called
       window.handlePayment = () => {
+        const paymentConfig = {
+          amount: customAmount ? parseFloat(customAmount) : totalPrice,
+          currency: "KES",
+          phone_number: phone,
+          reference,
+          paymentMethods: ["card", "mpesa"],
+          first_name: name,
+          description: "Purchase from HomeOfElectronics",
+        };
         intasend.payment(paymentConfig);
       };
     }
