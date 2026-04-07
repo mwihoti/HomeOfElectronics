@@ -4,66 +4,103 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 mx-auto w-full text-white py-10">
-      <div className="container mx-auto px-6 grid grid-cols-3 space-y-8 md:grid-cols-4 gap-12">
-        {/* Logo and Store Info */}
-        <div className="flex flex-col items-center md:items-start">
-          <Image src="/logo.jpeg" alt="Shop Logo" width={80} height={80} className="rounded-full mb-4" />
-          <h3 className="text-xl font-bold text-yellow-300">HomeOfElectronics</h3>
-          <p className="mt-2 text-sm text-gray-400">
-            Your one-stop shop for all electronic gadgets and accessories. Shop with confidence!
-          </p>
-        </div>
+    <footer className="bg-slate-900 text-white">
+      <div className="container mx-auto px-6 pt-12 pb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <div className="flex items-center space-x-3 mb-4">
+              <Image src="/logo.jpeg" alt="Shop Logo" width={40} height={40} className="rounded-lg" />
+              <span className="text-lg font-bold">
+                Home<span className="text-blue-400">Of</span>Electronics
+              </span>
+            </div>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Your one-stop shop for quality electronic gadgets and accessories. Shop with confidence.
+            </p>
+          </div>
 
-   {/* Quick Links */}
-   {/*   
-        <div>
-          <h4 className="text-lg font-semibold mb-4 text-yellow-300">Quick Links</h4>
-          <ul className="space-y-2">
-            <li><Link href="/" className="text-gray-400 hover:text-yellow-300 transition duration-300">Home</Link></li>
-            <li><Link href="/product" className="text-gray-400 hover:text-yellow-300 transition duration-300">Orders</Link></li>
-            <li><Link href="/about" className="text-gray-400 hover:text-yellow-300 transition duration-300">About Us</Link></li>
-            <li><Link href="/contact" className="text-gray-400 hover:text-yellow-300 transition duration-300">Contact</Link></li>
-          </ul>
-        </div> 
-        */}
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Quick Links</h4>
+            <ul className="space-y-2.5">
+              <li><Link href="/" className="text-sm text-slate-400 hover:text-white transition-colors">Home</Link></li>
+              <li><Link href="/products" className="text-sm text-slate-400 hover:text-white transition-colors">Products</Link></li>
+              <li><Link href="/orders" className="text-sm text-slate-400 hover:text-white transition-colors">Orders</Link></li>
+              <li><Link href="/about" className="text-sm text-slate-400 hover:text-white transition-colors">About Us</Link></li>
+            </ul>
+          </div>
 
+          {/* Contact */}
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Contact Us</h4>
+            <ul className="space-y-2.5">
+              <li className="flex items-start gap-2 text-sm text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                0723 559 412
+              </li>
+              <li className="flex items-start gap-2 text-sm text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                0769 836 03
+              </li>
+              <li className="flex items-start gap-2 text-sm text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Nairobi, Luthuli St, Skyworth Bldg, 3rd Fl, Stall 10
+              </li>
+            </ul>
+          </div>
 
-        {/* Contact Info */}
-        <div>
-          <h4 className="text-lg font-semibold mb-4 text-yellow-300">Contact Us</h4>
-          <ul className="space-y-2">
-            <li className="text-gray-400">Phone: 0723 559 412</li>
-            <li className="text-gray-400">Phone: 0769 836 03</li>
-{    /*        <li className="text-gray-400">Email: danielmwihoti@gmail.com</li>*/}
-            <li className="text-gray-400">Location: Nairobi, Luthuli St, Skyworth Bldg, 3rd Fl, Stall 10</li>
-          </ul>
-        </div>
-
-        {/* Social Media */}
-        <div>
-          <h4 className="text-lg font-semibold mb-4 text-yellow-300">Follow Us</h4>
-          <div className="flex space-x-4">
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-              <Image src="/ig.png" alt="Instagram" width={30} height={30} className="hover:opacity-75 transition duration-300" />
-            </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-              <Image src="/fb.png" alt="Facebook" width={30} height={30} className="hover:opacity-75 transition duration-300" />
-            </a>
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer">
-              <Image src="/x.png" alt="X" width={30} height={30} className="hover:opacity-75 transition duration-300" />
-            </a>
+          {/* Social */}
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-300 mb-4">Follow Us</h4>
+            <div className="flex space-x-3 mb-6">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 bg-slate-700 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors"
+                aria-label="Instagram"
+              >
+                <Image src="/ig.png" alt="Instagram" width={18} height={18} />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 bg-slate-700 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors"
+                aria-label="Facebook"
+              >
+                <Image src="/fb.png" alt="Facebook" width={18} height={18} />
+              </a>
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 bg-slate-700 hover:bg-slate-500 rounded-lg flex items-center justify-center transition-colors"
+                aria-label="X"
+              >
+                <Image src="/x.png" alt="X" width={18} height={18} />
+              </a>
+            </div>
+            <p className="text-xs text-slate-500">M-Pesa &amp; Stripe accepted</p>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="mt-8 border-t border-gray-800 pt-4 text-center text-gray-400 text-sm">
-        <p>&copy; {new Date().getFullYear()} HomeOfElectronics. All rights reserved.</p>
-        <p className="mt-2">
-          <Link href="/terms" className="hover:text-yellow-300 transition duration-300">Terms of Service</Link> | 
-          <Link href="/privacy" className="hover:text-yellow-300 transition duration-300 ml-2">Privacy Policy</Link>
-        </p>
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+          <p>&copy; {new Date().getFullYear()} HomeOfElectronics. All rights reserved.</p>
+          <div className="flex gap-4">
+            <Link href="/terms" className="hover:text-slate-300 transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-slate-300 transition-colors">Privacy Policy</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
