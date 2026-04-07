@@ -12,7 +12,7 @@ const stats = [
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#f5dbcb]">
       {/* Hero */}
       <div className="relative h-72 md:h-96 w-full overflow-hidden bg-slate-900">
         <Image

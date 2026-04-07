@@ -33,7 +33,7 @@ const PaymentsPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#f5dbcb]">
       {/* Page header */}
       <div className="bg-white border-b border-slate-100">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
@@ -97,7 +97,7 @@ const PaymentsPage = () => {
             <div className="hidden md:block bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-100">
+                  <tr className="bg-[#f5dbcb] border-b border-slate-200">
                     <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Tracking ID</th>
                     <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
                     <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Provider</th>
