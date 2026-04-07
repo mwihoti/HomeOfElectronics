@@ -22,7 +22,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+    <nav className="bg-zinc-950 text-white shadow-lg sticky top-0 z-50 border-b border-zinc-800">
       {/* Top bar */}
       <div className="container mx-auto flex items-center justify-between px-6 py-3">
         {/* Logo */}
@@ -34,11 +34,11 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop nav links */}
-        <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-          <Link href="/" className="hover:text-white transition-colors duration-200">Home</Link>
-          <Link href="/products" className="hover:text-white transition-colors duration-200">Products</Link>
-          <Link href="/orders" className="hover:text-white transition-colors duration-200">Orders</Link>
-          <Link href="/about" className="hover:text-white transition-colors duration-200">About</Link>
+        <div className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-100">
+          <Link href="/" className="hover:text-blue-400 transition-colors duration-200">Home</Link>
+          <Link href="/products" className="hover:text-blue-400 transition-colors duration-200">Products</Link>
+          <Link href="/orders" className="hover:text-blue-400 transition-colors duration-200">Orders</Link>
+          <Link href="/about" className="hover:text-blue-400 transition-colors duration-200">About</Link>
         </div>
 
         {/* Right actions */}
@@ -46,7 +46,7 @@ const Navbar = () => {
           {/* Wishlist */}
           <button
             onClick={handleWishlistClick}
-            className="relative p-2 text-slate-300 hover:text-white transition-colors"
+            className="relative p-2 text-white hover:text-blue-400 transition-colors"
             aria-label="Wishlist"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,7 +62,7 @@ const Navbar = () => {
           {/* Cart */}
           <button
             onClick={handleAddToCart}
-            className="relative p-2 text-slate-300 hover:text-white transition-colors"
+            className="relative p-2 text-white hover:text-blue-400 transition-colors"
             aria-label="Cart"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,15 +78,15 @@ const Navbar = () => {
           {/* Auth */}
           {user ? (
             <div className="flex items-center space-x-3 ml-2">
-              <div className="flex items-center space-x-2 bg-slate-700 px-3 py-1.5 rounded-lg">
+              <div className="flex items-center space-x-2 bg-zinc-800 border border-zinc-700 px-3 py-1.5 rounded-lg">
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-xs font-bold uppercase">
                   {user.username?.[0] || "U"}
                 </div>
-                <span className="text-sm text-slate-200">{user.username}</span>
+                <span className="text-sm text-white font-medium">{user.username}</span>
               </div>
               <button
                 onClick={handleLogout}
-                className="text-sm text-slate-400 hover:text-red-400 transition-colors px-2 py-1"
+                className="text-sm text-red-400 hover:text-red-300 transition-colors px-2 py-1 font-medium"
               >
                 Logout
               </button>
@@ -95,7 +95,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-2 ml-2">
               <Link
                 href="/signIn"
-                className="text-sm text-slate-300 hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors"
+                className="text-sm text-white font-medium hover:text-blue-400 px-3 py-1.5 rounded-lg hover:bg-zinc-800 transition-colors border border-zinc-700"
               >
                 Sign In
               </Link>
@@ -111,7 +111,7 @@ const Navbar = () => {
 
         {/* Mobile: cart icon + hamburger */}
         <div className="md:hidden flex items-center space-x-3">
-          <button onClick={handleAddToCart} className="relative p-2 text-slate-300">
+          <button onClick={handleAddToCart} className="relative p-2 text-white">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
@@ -123,7 +123,7 @@ const Navbar = () => {
           </button>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-slate-300 hover:text-white"
+            className="p-2 text-white hover:text-blue-400"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -141,18 +141,18 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-slate-700 bg-slate-800 px-6 py-4 space-y-3">
-          <Link href="/" className="block text-slate-300 hover:text-white py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Home</Link>
-          <Link href="/products" className="block text-slate-300 hover:text-white py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Products</Link>
-          <Link href="/orders" className="block text-slate-300 hover:text-white py-2 text-sm" onClick={() => setIsMenuOpen(false)}>Orders</Link>
-          <Link href="/about" className="block text-slate-300 hover:text-white py-2 text-sm" onClick={() => setIsMenuOpen(false)}>About</Link>
-          <button onClick={() => { handleWishlistClick(); setIsMenuOpen(false); }} className="block text-slate-300 hover:text-white py-2 text-sm w-full text-left">
+        <div className="md:hidden border-t border-zinc-800 bg-zinc-900 px-6 py-4 space-y-3">
+          <Link href="/" className="block text-white hover:text-blue-400 py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Home</Link>
+          <Link href="/products" className="block text-white hover:text-blue-400 py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Products</Link>
+          <Link href="/orders" className="block text-white hover:text-blue-400 py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>Orders</Link>
+          <Link href="/about" className="block text-white hover:text-blue-400 py-2 text-sm font-medium" onClick={() => setIsMenuOpen(false)}>About</Link>
+          <button onClick={() => { handleWishlistClick(); setIsMenuOpen(false); }} className="block text-white hover:text-blue-400 py-2 text-sm font-medium w-full text-left">
             Wishlist {wishlists.length > 0 && `(${wishlists.length})`}
           </button>
-          <div className="pt-2 border-t border-slate-700">
+          <div className="pt-2 border-t border-zinc-800">
             {user ? (
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-300">{user.username}</span>
+                <span className="text-sm text-white font-medium">{user.username}</span>
                 <button onClick={handleLogout} className="text-sm text-red-400 hover:text-red-300">Logout</button>
               </div>
             ) : (
