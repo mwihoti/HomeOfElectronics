@@ -1,34 +1,27 @@
-import mongoose from "mongoose";
+import { sql, initDb } from '@/lib/db';
 
-const productSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    images: {
-        type: [String],
-        required: true,
-        data: Buffer,
+const Product = {
+  async create({ name, images, category, price, description, quantity }) {
+    await initDb();
+    const rows = await sql`
+      INSERT INTO products (name, images, category, price, description, quantity)
+      VALUES (${name}, ${images}, ${category}, ${price}, ${description}, ${quantity})
+      RETURNING *
+    `;
+    return rows[0];
+  },
 
-        
-    },
-    category: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: String,
-        required: true
-    },
-    description : {
-        type: String,
-        required: true
-    },
-    quantity: {
-        type: Number,
-        required: true
-    }
+  async find() {
+    await initDb();
+    const rows = await sql`SELECT * FROM products ORDER BY created_at DESC`;
+    return rows;
+  },
 
-})
+  async findById(id) {
+    await initDb();
+    const rows = await sql`SELECT * FROM products WHERE id = ${id} LIMIT 1`;
+    return rows[0] || null;
+  },
+};
 
-export default  mongoose.models.Product || mongoose.model('Product', productSchema)
+export default Product;

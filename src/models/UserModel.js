@@ -1,55 +1,60 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import { sql, initDb } from '@/lib/db';
+import bcrypt from 'bcryptjs';
 
-const UserModel = new mongoose.Schema({
-    firstname: {
-        type: String,
-        required: true,
-       
-    },
-    lastname: {
-        type: String,
-        required: true,
-       
-    },
-    username: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
-    },
-    password: {
-        type: String,
-        required: true,
+const UserModel = {
+  async findOne(conditions) {
+    await initDb();
+    if (conditions.$or) {
+      const clauses = conditions.$or;
+      const email = clauses.find((c) => c.email)?.email;
+      const username = clauses.find((c) => c.username)?.username;
+      if (email && username) {
+        const rows = await sql`
+          SELECT * FROM auth_users
+          WHERE email = ${email} OR username = ${username}
+          LIMIT 1
+        `;
+        return rows[0] || null;
+      }
+      if (username) {
+        const rows = await sql`
+          SELECT * FROM auth_users WHERE username = ${username} LIMIT 1
+        `;
+        return rows[0] || null;
+      }
+      if (email) {
+        const rows = await sql`
+          SELECT * FROM auth_users WHERE email = ${email} LIMIT 1
+        `;
+        return rows[0] || null;
+      }
     }
-
-},
-{ timestamps: true
-
-});
-
-UserModel.pre('save', async function(next) {
-    if (!this.isModified('password')){
-        next();
-
+    if (conditions.username) {
+      const rows = await sql`
+        SELECT * FROM auth_users WHERE username = ${conditions.username} LIMIT 1
+      `;
+      return rows[0] || null;
     }
+    if (conditions.email) {
+      const rows = await sql`
+        SELECT * FROM auth_users WHERE email = ${conditions.email} LIMIT 1
+      `;
+      return rows[0] || null;
+    }
+    return null;
+  },
+
+  async create({ firstname, lastname, username, email, password }) {
+    await initDb();
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next ();
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const rows = await sql`
+      INSERT INTO auth_users (firstname, lastname, username, email, password)
+      VALUES (${firstname}, ${lastname}, ${username}, ${email}, ${hashedPassword})
+      RETURNING *
+    `;
+    return rows[0];
+  },
+};
 
-
-
-})
-
-UserModel.methods.matchPassword = async function(enteredPassword){
-    return await bcrypt.compare(enteredPassword, this.password);
-}
-
-export default mongoose.models.User || mongoose.model('User', UserModel);
-
-
+export default UserModel;

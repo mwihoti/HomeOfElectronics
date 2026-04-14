@@ -1,23 +1,21 @@
-import mongoose from "mongoose";
+import { sql, initDb } from '@/lib/db';
 
-const userSchema  = new mongoose.Schema({
-    firstName: {
-        type: String
-    },
-    telNumber: {
-        type: String,
-        required: true
-    },
-    description : {
-        type: String,
-        required: true
+const Users = {
+  async create({ firstName, telNumber, description, images }) {
+    await initDb();
+    const rows = await sql`
+      INSERT INTO staff_users (first_name, tel_number, description, images)
+      VALUES (${firstName}, ${telNumber}, ${description}, ${images})
+      RETURNING *
+    `;
+    return rows[0];
+  },
 
-    },
-    images: {
-      type: [String], // Array of base64 encoded strings
-      required: true,
-    },
+  async find() {
+    await initDb();
+    const rows = await sql`SELECT * FROM staff_users ORDER BY created_at DESC`;
+    return rows;
+  },
+};
 
-})
-export default mongoose.models.Users || mongoose.model('Users', userSchema);
-
+export default Users;

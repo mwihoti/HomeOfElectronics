@@ -1,7 +1,4 @@
-// pages/api/getUsers.js
-
 import nextConnect from 'next-connect';
-import { connectToDatabase } from '../../lib/mongodb';
 import Users from '../../models/Users';
 
 const apiRoute = nextConnect({
@@ -14,10 +11,8 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.get(async (req, res) => {
-  await connectToDatabase();
-
   try {
-    const users = await Users.find({});
+    const users = await Users.find();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -25,4 +20,3 @@ apiRoute.get(async (req, res) => {
 });
 
 export default apiRoute;
-        

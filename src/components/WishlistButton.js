@@ -1,28 +1,41 @@
+'use client';
 import React from 'react';
-import Image from 'next/image';
 import { useWishlist } from '@/context/WishlistContext';
 
-const WishlistButton = ({ product }) => {
-  const { addToWishlist} = useWishlist();
+const WishlistButton = ({ product, className = '' }) => {
+  const { wishlists, addToWishlist, removeFromWishlist } = useWishlist();
+  const isWishlisted = wishlists.some((item) => item._id === product?._id);
 
-  const handleAddtoWishlist = (e) => {
+  const toggle = (e) => {
     e.stopPropagation();
-    addToWishlist(product);
+    e.preventDefault();
+    if (!product) return;
+    if (isWishlisted) removeFromWishlist(product._id);
+    else addToWishlist(product);
   };
 
-
-
   return (
-    <div className=''>
-     
-     
-        <button className='py-2 border inset-1  mt-2  w-full rounded bg-blue-500 border-cyan-700 '  onClick={handleAddtoWishlist}>
-          <h3 className='text-center'>Add to</h3>
-          <Image className='rounded object-fill' src="/wishlist.png" alt="wishlist" width={20} height={20} />
-        </button>
-     
-    </div>
+    <button
+      onClick={toggle}
+      aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+      className={`flex items-center justify-center rounded-full transition-all
+        ${isWishlisted
+          ? 'text-red-500 hover:text-red-600'
+          : 'text-slate-300 hover:text-red-400'}
+        ${className}`}
+    >
+      <svg
+        className="w-5 h-5"
+        viewBox="0 0 24 24"
+        fill={isWishlisted ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth={1.8}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round"
+          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>
+    </button>
   );
-}
+};
 
 export default WishlistButton;

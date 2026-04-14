@@ -1,18 +1,14 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
-import { connectToDatabase, gfs } from '../../lib/mongodb';
 import Product from '../../models/Product';
 
-
-// 
-
-const upload = multer({ 
+const upload = multer({
   storage: multer.memoryStorage(),
 });
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     res.status(501).json({ error: `Sorry something happened! ${error.message}` });
   },
   onNoMatch(req, res) {
@@ -23,29 +19,24 @@ const apiRoute = nextConnect({
 apiRoute.use(upload.array('images', 10));
 
 apiRoute.post(async (req, res) => {
-  await connectToDatabase();
-
   const { name, category, price, description, quantity } = req.body;
   const images = req.files ? req.files.map((file) => file.buffer.toString('base64')) : [];
 
-  const newProduct = new Product({
-    name,
-    images,
-    category,
-    price,
-    description,
-    quantity,   
-  });
-
   try {
-    const savedProduct = await newProduct.save();
+    const savedProduct = await Product.create({
+      name,
+      images,
+      category,
+      price,
+      description,
+      quantity: parseInt(quantity, 10),
+    });
     res.status(201).json(savedProduct);
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 });
-
 
 export const config = {
   api: {

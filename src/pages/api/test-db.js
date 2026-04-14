@@ -1,4 +1,4 @@
-import { connectToDatabase } from '@/lib/mongodb';
+import { sql, initDb } from '@/lib/db';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -6,29 +6,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('Testing MongoDB connection...');
-    const connection = await connectToDatabase();
-    
-    if (connection.readyState === 1) {
-      return res.status(200).json({ 
-        message: 'MongoDB connection successful',
-        readyState: connection.readyState,
-        host: connection.host,
-        name: connection.name
-      });
-    } else {
-      return res.status(500).json({ 
-        message: 'MongoDB connection failed',
-        readyState: connection.readyState 
-      });
-    }
+    await initDb();
+    const result = await sql`SELECT NOW() AS now, current_database() AS db`;
+    return res.status(200).json({
+      message: 'PostgreSQL connection successful',
+      timestamp: result[0].now,
+      database: result[0].db,
+    });
   } catch (error) {
-    console.error('MongoDB connection test failed:', error);
-    const payload = { message: 'MongoDB connection failed' };
+    console.error('PostgreSQL connection test failed:', error);
+    const payload = { message: 'PostgreSQL connection failed' };
     if (process.env.NODE_ENV !== 'production') {
       payload.error = error?.message;
-      payload.code = error?.code;
-      payload.hostname = error?.hostname;
     }
     return res.status(500).json(payload);
   }

@@ -1,6 +1,5 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
-import { connectToDatabase} from '../../lib/mongodb';    
 import Users from '../../models/Users';
 
 const upload = multer({
@@ -19,20 +18,11 @@ const apiRoute = nextConnect({
 apiRoute.use(upload.array('images', 10));
 
 apiRoute.post(async (req, res) => {
-  await connectToDatabase();
-
   const { firstName, description, telNumber } = req.body;
   const images = req.files ? req.files.map((file) => file.buffer.toString('base64')) : [];
 
-  const newUser = new Users({
-    firstName,
-    description,
-    telNumber,
-    images,
-  });
-
   try {
-    const savedUser = await newUser.save();
+    const savedUser = await Users.create({ firstName, description, telNumber, images });
     res.status(201).json(savedUser);
   } catch (error) {
     res.status(500).json({ error: error.message });

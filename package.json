@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",
+    "@neondatabase/serverless": "^1.0.2",
     "@sanity/client": "^6.20.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.48.1",
